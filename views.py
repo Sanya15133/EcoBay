@@ -3,6 +3,8 @@ from django.shortcuts import render
 def home(request):
     return render(request, 'index.html')
 
+def search(request):
+    pass
 
 def register(request):
     pass
@@ -24,3 +26,4 @@ def add_item(request):
 
 def get_item(request):
     pass
+
