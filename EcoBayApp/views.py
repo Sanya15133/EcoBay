@@ -10,12 +10,12 @@ def register(request):
     return render(request, 'register.html')
 
 def login(request):
-    pass
+    return render(request, 'sign-in.html')
 
 def logout(request):
     pass
 
-def categories(request):
+def item_categories(request):
     pass
 
 def list_items(request):
@@ -33,5 +33,8 @@ def list_skills(request):
 def add_skill(request):
     pass
 
-def get_skill(request):
+def request_skill(request):
+    pass
+
+def bid(request):
     pass
