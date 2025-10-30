@@ -7,7 +7,7 @@ def search(request):
     pass
 
 def register(request):
-    pass
+    return render(request, 'register.html')
 
 def login(request):
     pass
@@ -27,3 +27,11 @@ def add_item(request):
 def get_item(request):
     pass
 
+def list_skills(request):
+    pass
+
+def add_skill(request):
+    pass
+
+def get_skill(request):
+    pass
