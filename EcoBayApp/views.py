@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
 def home(request):
-    return render(request, 'layout.html')
+    return render(request, 'index.html')
 
 def search(request):
     pass
