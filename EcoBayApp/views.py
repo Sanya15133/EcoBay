@@ -9,10 +9,11 @@ def search(request):
 def register(request):
     
     if request.method == 'POST':
-        name = request.form.get('name')
-    
-    
-    
+        username = request.form.get('username')
+        email = request.form.get('email')
+        password = request.form.get('name')
+        confirm_password = request.form.get('name')
+         
     
     return render(request, 'register.html')
 
