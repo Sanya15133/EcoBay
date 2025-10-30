@@ -7,6 +7,13 @@ def search(request):
     pass
 
 def register(request):
+    
+    if request.method == 'POST':
+        name = request.form.get('name')
+    
+    
+    
+    
     return render(request, 'register.html')
 
 def login(request):
