@@ -23,7 +23,7 @@
 }
 
 .nav-links li a {
-  color: rgb(23, 151, 102);
+  color: rgb(2, 88, 55);
   text-decoration: none;
 }
 
@@ -67,6 +67,12 @@
 }
 
 .title-div {
-    text-align: center;
-    align-items: center;
+  text-align: center;
+  align-items: center;
+}
+
+main {
+  background-color: #fcecf3;
+  border-radius: 2%;
+  margin: auto;
 }
