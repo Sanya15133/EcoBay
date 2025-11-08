@@ -46,7 +46,8 @@ def get_item(request):
     pass
 
 def list_skills(request):
-    pass
+    if request.method == 'GET':
+        skills = skills.db
 
 def add_skill(request):
     pass
