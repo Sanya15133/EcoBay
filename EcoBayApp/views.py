@@ -32,7 +32,12 @@ def item_categories(request):
     pass
 
 def list_items(request):
-    pass
+    if request.method == 'GET':
+        items = items.db
+
+def list_items_by_category(request):
+    if request.method == 'GET':
+        items = items.db
 
 def add_item(request):
     pass
