@@ -18,7 +18,11 @@ def register(request):
     return render(request, 'register.html')
 
 def login(request):
+    if request.method == 'POST':
+        username = request.form.get('username')
+        password = request.form.get('password')
     return render(request, 'sign-in.html')
+
 
 def logout(request):
     pass
