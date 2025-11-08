@@ -4,7 +4,9 @@ def home(request):
     return render(request, 'index.html')
 
 def search(request):
-    pass
+    
+    if request.method == 'GET':
+        query = request.form.get('search')
 
 def register(request):
     
