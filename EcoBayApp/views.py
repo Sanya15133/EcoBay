@@ -23,7 +23,6 @@ def login(request):
         password = request.form.get('password')
     return render(request, 'sign-in.html')
 
-
 def logout(request):
     pass
 
