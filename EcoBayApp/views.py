@@ -41,7 +41,8 @@ def list_items_by_category(request):
         items = items.db
 
 def add_item(request):
-    pass
+    if request.method == 'POST':
+        pass
 
 def get_item(request):
     if request.method == 'GET':
