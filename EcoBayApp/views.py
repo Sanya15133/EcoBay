@@ -29,7 +29,8 @@ def logout(request):
     pass
 
 def item_categories(request):
-    pass
+    if request.method == 'GET':
+        categories = categories.db
 
 def list_items(request):
     if request.method == 'GET':
@@ -52,7 +53,10 @@ def list_skills(request):
         skills = skills.db
 
 def add_skill(request):
-    pass
+    if request.method == 'POST':
+        skill = request.form.get('skill')
+        description = request.form.get('description')
+        date = request.form.get('date')
 
 def request_skill(request):
     pass
