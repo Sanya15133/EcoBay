@@ -43,7 +43,9 @@ def add_item(request):
     pass
 
 def get_item(request):
-    pass
+    if request.method == 'GET':
+        query = request.form.get('item')
+        item = items.db.find(query)
 
 def list_skills(request):
     if request.method == 'GET':
