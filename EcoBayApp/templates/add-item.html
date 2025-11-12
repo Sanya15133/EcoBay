@@ -1,0 +1,18 @@
+{% extends 'layout.html' %}
+
+{% block title %}Add Item{% endblock %}
+
+{% block content %}
+    <h2>Add Item</h2>
+    <div class="main-div">
+     <form method="POST">
+        <label>Item</label><input>
+        <label>Description</label><input>
+        <label>Date</label><input>
+        <label>Price</label><input>
+        <label>Bids</label><input>
+        <label>Image link</label><input>
+        <button type="submit">Add</button>
+     </form>
+    </div>
+{% endblock %}
