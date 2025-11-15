@@ -12,5 +12,6 @@
 #     pass
 
 
-# class Bid():
+# class Offer():
 #     pass
+
