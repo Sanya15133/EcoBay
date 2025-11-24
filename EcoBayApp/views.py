@@ -15,7 +15,7 @@ def register(request):
         email = request.form.get('email')
         password = request.form.get('name')
         confirm_password = request.form.get('name')
-         
+
     
     return render(request, 'register.html')
 
@@ -63,4 +63,5 @@ def request_skill(request):
     pass
 
 def bid(request):
-    pass
+    if request.method == 'POST':
+        print('bid')
