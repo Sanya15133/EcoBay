@@ -42,7 +42,11 @@ def list_items_by_category(request):
 
 def add_item(request):
     if request.method == 'POST':
-        pass
+        name = request.form.get('name')
+        description = request.form.get('description')
+        price = request.form.get('price')
+        bids = request.form.get('bids')
+        image = request.form.get('image')
 
 def get_item(request):
     if request.method == 'GET':
@@ -60,7 +64,8 @@ def add_skill(request):
         date = request.form.get('date')
 
 def request_skill(request):
-    pass
+    if request.method == 'POST':
+        print('hello')
 
 def bid(request):
     if request.method == 'POST':
