@@ -8,6 +8,7 @@ def search(request):
     if request.method == 'GET':
         query = request.form.get('search')
 
+
 def register(request):
     
     if request.method == 'POST':
@@ -16,7 +17,6 @@ def register(request):
         password = request.form.get('name')
         confirm_password = request.form.get('name')
 
-    
     return render(request, 'register.html')
 
 def login(request):
