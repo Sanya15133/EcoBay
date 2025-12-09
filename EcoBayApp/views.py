@@ -1,4 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib.auth import logout
+
 
 def home(request):
     return render(request, 'index.html')
@@ -7,7 +9,6 @@ def search(request):
     
     if request.method == 'GET':
         query = request.form.get('search')
-
 
 def register(request):
     
@@ -26,7 +27,8 @@ def login(request):
     return render(request, 'sign-in.html')
 
 def logout(request):
-    pass
+    logout(request)
+    return redirect('index')
 
 def item_categories(request):
     if request.method == 'GET':
