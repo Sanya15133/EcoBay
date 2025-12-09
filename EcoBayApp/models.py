@@ -1,17 +1,31 @@
-# from django.contrib.auth.models import AbstractUser
-
-# class User(AbstractUser):
-#     pass
+from django.contrib.auth.models import AbstractUser
+from django.db import models
 
 
-# class Item():
-#     pass
+class User(AbstractUser):
+    id = models.CharField(max_length=40, unique=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+class Item(models.Model):
+    id = models.CharField(max_length=40, unique=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    name = models.CharField(max_length=20)
+    description = models.CharField(max_length=200)
+    amount = models.DecimalField(max_digits=5, decimal_places=2)
+    is_active = models.BooleanField(default=True)
+
+class Skill(models.Model):
+    id = models.CharField(max_length=40, unique=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    name = models.CharField(max_length=20)
+    description = models.CharField(max_length=200)
+    amount = models.DecimalField(max_digits=5, decimal_places=2)
+    is_active = models.BooleanField(default=True)
 
 
-# class Skill():
-#     pass
+class Offer(models.Model):
+    id = models.CharField(max_length=40, unique=True)
+    name = models.CharField(max_length=20)
+    created_at = models.DateTimeField(auto_now_add=True)
 
-
-# class Offer():
-#     pass
-
+    
