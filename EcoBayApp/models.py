@@ -3,11 +3,11 @@ from django.db import models
 
 
 class User(AbstractUser):
-    id = models.CharField(max_length=40, unique=True)
+    id = models.CharField(max_length=40, unique=True, primary_key=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
 class Item(models.Model):
-    id = models.CharField(max_length=40, unique=True)
+    id = models.CharField(max_length=40, unique=True, primary_key=True)
     created_at = models.DateTimeField(auto_now_add=True)
     name = models.CharField(max_length=20)
     description = models.CharField(max_length=200)
@@ -15,7 +15,7 @@ class Item(models.Model):
     is_active = models.BooleanField(default=True)
 
 class Skill(models.Model):
-    id = models.CharField(max_length=40, unique=True)
+    id = models.CharField(max_length=40, unique=True, primary_key=True)
     created_at = models.DateTimeField(auto_now_add=True)
     name = models.CharField(max_length=20)
     description = models.CharField(max_length=200)
@@ -24,7 +24,7 @@ class Skill(models.Model):
 
 
 class Offer(models.Model):
-    id = models.CharField(max_length=40, unique=True)
+    id = models.CharField(max_length=40, unique=True, primary_key=True)
     name = models.CharField(max_length=20)
     created_at = models.DateTimeField(auto_now_add=True)
 

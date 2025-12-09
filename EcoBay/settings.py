@@ -27,7 +27,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -52,6 +51,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'EcoBay.urls'
+AUTH_USER_MODEL = 'EcoBayApp.User'
 
 
 TEMPLATES = [
