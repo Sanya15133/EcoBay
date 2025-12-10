@@ -1,12 +1,12 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import logout
+from .models import Item, Skill
 
 
 def home(request):
     return render(request, 'index.html')
 
 def search(request):
-    
     if request.method == 'GET':
         query = request.form.get('search')
 
@@ -36,11 +36,11 @@ def item_categories(request):
 
 def list_items(request):
     if request.method == 'GET':
-        items = items.db
+        items = Item.db.all()
 
 def list_items_by_category(request):
     if request.method == 'GET':
-        items = items.db
+        items = Item.db.all()
 
 def add_item(request):
     if request.method == 'POST':
@@ -53,11 +53,11 @@ def add_item(request):
 def get_item(request):
     if request.method == 'GET':
         query = request.form.get('item')
-        item = items.db.filter(query)
+        item = Item.db.filter(query)
 
 def list_skills(request):
     if request.method == 'GET':
-        skills = skills.db
+        skills = Skill.db.all()
 
 def add_skill(request):
     if request.method == 'POST':
