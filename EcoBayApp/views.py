@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import logout
-from .models import Item, Skill
+from django.http import HttpResponse, HttpResponseRedirect
+from django.urls import reverse
+from django.contrib.auth import logout, authenticate
+from .models import Item, Skill, User
 
 
 def home(request):
@@ -17,14 +19,26 @@ def register(request):
         email = request.form.get('email')
         password = request.form.get('name')
         confirm_password = request.form.get('name')
+        new_user = User({username, email, password, confirm_password})
 
     return render(request, 'register.html')
 
 def login(request):
+
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
-    return render(request, 'sign-in.html')
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            return HttpResponseRedirect(reverse("index"))
+        else:
+            return render(request, "login.html", {
+                "message": "Invalid username and/or password."
+            })
+    else:
+        return render(request, "register.html")
 
 def logout(request):
     logout(request)
@@ -50,6 +64,8 @@ def add_item(request):
         bids = request.form.get('bids')
         image = request.form.get('image')
 
+        new_item = Item({name, description, price, bids, image})
+
 def get_item(request):
     if request.method == 'GET':
         query = request.form.get('item')
@@ -64,6 +80,7 @@ def add_skill(request):
         skill = request.form.get('skill')
         description = request.form.get('description')
         date = request.form.get('date')
+        new_skill = Skill({skill, description, date})
 
 def request_skill(request):
     if request.method == 'POST':
