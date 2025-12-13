@@ -5,16 +5,16 @@
 {% block content %}
     <h2>Register</h2>
     <div>
-        <form>
+        <form method="post">
             <label id="username" for="username">Username</label>
-            <input id="username">
+            <input id="username" required>
             <label id="email" for="email">Email</label>
-            <input id="email">
+            <input id="email" required>
             <label id="password" for="password">Password</label>
-            <input id="password">
+            <input id="password" required>
             <label id="confirm_password" for="confirm_password">Confirm Password</label>
-            <input id="confirm_password">
-           <button>Submit</button>
+            <input id="confirm_password" required>
+           <button type="submit">Submit</button>
         </form>
     </div>
 {% endblock %}
