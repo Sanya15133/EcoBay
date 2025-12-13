@@ -5,6 +5,7 @@ from django.db import models
 class User(AbstractUser):
     id = models.CharField(max_length=40, unique=True, primary_key=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    
 
 class Item(models.Model):
     id = models.CharField(max_length=40, unique=True, primary_key=True)

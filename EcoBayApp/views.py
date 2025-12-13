@@ -15,10 +15,16 @@ def search(request):
 def register(request):
     
     if request.method == 'POST':
-        username = request.form.get('username')
-        email = request.form.get('email')
-        password = request.form.get('name')
-        confirm_password = request.form.get('name')
+        username = request.form.post('username')
+        email = request.form.post('email')
+        password = request.form.post('name')
+        confirm_password = request.form.post('name')
+
+        if password != confirm_password:
+            return render(request, 'register.html', {
+                'message': 'Passwords do not match'
+            })
+
         new_user = User({username, email, password, confirm_password})
 
     return render(request, 'register.html')
@@ -26,8 +32,8 @@ def register(request):
 def login(request):
 
     if request.method == 'POST':
-        username = request.form.get('username')
-        password = request.form.get('password')
+        username = request.form.post('username')
+        password = request.form.post('password')
         user = authenticate(request, username=username, password=password)
 
         if user is not None:
