@@ -14,18 +14,24 @@ def search(request):
 
 def register(request):
     
+    error = None
+
     if request.method == 'POST':
         username = request.form.post('username')
         email = request.form.post('email')
         password = request.form.post('name')
         confirm_password = request.form.post('name')
 
-        if password != confirm_password:
-            return render(request, 'register.html', {
-                'message': 'Passwords do not match'
-            })
-
-        new_user = User({username, email, password, confirm_password})
+        if not all([username, email, password, confirm_password]):
+            error = "All fields are required."
+            return render(request, "register.html", {"error": error})
+        elif password != confirm_password:
+            error = "Passwords do not match."
+            return render(request, "register.html", {"error": error})
+        else:
+            new_user = User({username, email, password, confirm_password})
+            User.save(new_user)
+            return render(request, "index.html")
 
     return render(request, 'register.html')
 

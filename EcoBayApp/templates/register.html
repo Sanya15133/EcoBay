@@ -4,17 +4,21 @@
 
 {% block content %}
     <h2>Register</h2>
+    {% if error %}
+    <p style="color: red;">{{ error }}</p>
+    {% endif %}
     <div>
-        <form method="post">
-            <label id="username" for="username">Username</label>
-            <input id="username" required>
-            <label id="email" for="email">Email</label>
-            <input id="email" required>
-            <label id="password" for="password">Password</label>
-            <input id="password" required>
-            <label id="confirm_password" for="confirm_password">Confirm Password</label>
-            <input id="confirm_password" required>
-           <button type="submit">Submit</button>
-        </form>
+    <form method="post">
+            {% csrf_token %}
+    <label for="username">Username</label>
+    <input type="text" name="username" id="username" required>
+    <label for="email">Email</label>
+    <input type="email" name="email" id="email" required>
+    <label for="password">Password</label>
+    <input type="password" name="password" id="password" required>
+    <label for="confirm_password">Confirm Password</label>
+    <input type="password" name="confirm_password" id="confirm_password" required>
+    <button type="submit">Submit</button>
+</form>
     </div>
 {% endblock %}
