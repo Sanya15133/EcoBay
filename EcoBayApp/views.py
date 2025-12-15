@@ -13,14 +13,14 @@ def search(request):
         query = request.form.get('search')
 
 def register(request):
-    
+    print('hello')
     error = None
 
     if request.method == 'POST':
-        username = request.form.post('username')
-        email = request.form.post('email')
-        password = request.form.post('name')
-        confirm_password = request.form.post('name')
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        confirm_password = request.POST.get('confirm-password')
 
         if not all([username, email, password, confirm_password]):
             error = "All fields are required."
@@ -29,17 +29,21 @@ def register(request):
             error = "Passwords do not match."
             return render(request, "register.html", {"error": error})
         else:
-            new_user = User({username, email, password, confirm_password})
-            User.save(new_user)
-            return render(request, "index.html")
+            User.objects.create_user(
+                username=username,
+                email=email,
+                password=password
+            )
 
-    return render(request, 'register.html')
+            return redirect(request, "index.html")
+    
+    return render(request, 'register.html', {'error': error})
 
-def login(request):
+def login_view(request):
 
     if request.method == 'POST':
-        username = request.form.post('username')
-        password = request.form.post('password')
+        username = request.POST.get('username')
+        password = request.POST.get('password')
         user = authenticate(request, username=username, password=password)
 
         if user is not None:
@@ -50,7 +54,7 @@ def login(request):
                 "message": "Invalid username and/or password."
             })
     else:
-        return render(request, "register.html")
+        return render(request, "login.html")
 
 def logout(request):
     logout(request)
