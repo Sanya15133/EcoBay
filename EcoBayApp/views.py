@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
-from django.contrib.auth import logout, authenticate
+from django.contrib.auth import logout, authenticate, login
 from .models import Item, Skill, User
 
 
@@ -41,6 +41,7 @@ def register(request):
 
 def login_view(request):
 
+    error = None
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -50,8 +51,10 @@ def login_view(request):
             login(request, user)
             return HttpResponseRedirect(reverse("index"))
         else:
+            error = "Invalid username and/or password."
+            
             return render(request, "login.html", {
-                "message": "Invalid username and/or password."
+                "error": error
             })
     else:
         return render(request, "login.html")
