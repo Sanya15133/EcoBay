@@ -52,7 +52,6 @@ def login_view(request):
             return HttpResponseRedirect(reverse("index"))
         else:
             error = "Invalid username and/or password."
-            
             return render(request, "login.html", {
                 "error": error
             })
@@ -76,14 +75,19 @@ def list_items_by_category(request):
         items = Item.db.all()
 
 def add_item(request):
+
+    error = None
+
     if request.method == 'POST':
         name = request.form.get('name')
         description = request.form.get('description')
         price = request.form.get('price')
-        bids = request.form.get('bids')
         image = request.form.get('image')
 
-        new_item = Item({name, description, price, bids, image})
+        if not all([name, description, price, image]):
+            error = 'All fields are required'
+
+        new_item = Item({name, description, price, image})
 
 def get_item(request):
     if request.method == 'GET':

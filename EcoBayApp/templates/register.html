@@ -8,14 +8,22 @@
     <div>
     <form method="POST">
     {% csrf_token %}
+    <p>
     <label for="username">Username</label>
     <input type="text" name="username" id="username" required>
+    </p>
+    <p>
     <label for="email">Email</label>
     <input type="email" name="email" id="email" required>
+    </p>
+    <p>
     <label for="password">Password</label>
     <input type="password" name="password" id="password" required>
+    </p>
+    <p>
     <label for="confirm_password">Confirm Password</label>
     <input type="password" name="confirm_password" id="confirm_password" required>
+    </p>
     <button type="submit">Submit</button>
 </form>
 
