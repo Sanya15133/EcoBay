@@ -1,0 +1,16 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <h2>Add Skill</h2>
+    <div class="main-div">
+     <form method="POST">
+        <label>Skill</label><input type="text">
+        <label>Description</label><input type="text">
+        <label>Date</label><input type="date">
+        <label>Price</label><input type="number">
+        <label>Bids</label><input type="number">
+        <label>Image link</label><input type="url">
+        <button type="submit">Add</button>
+     </form>
+    </div>
+{% endblock %}

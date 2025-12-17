@@ -137,6 +137,6 @@ def request_skill(request):
     if request.method == 'POST':
         print('hello')
 
-def bid(request):
+def make_offer(request):
     if request.method == 'POST':
         print('bid')
