@@ -79,15 +79,22 @@ def add_item(request):
     error = None
 
     if request.method == 'POST':
-        name = request.form.get('name')
-        description = request.form.get('description')
-        price = request.form.get('price')
-        image = request.form.get('image')
+        name = request.POST.get('name')
+        description = request.POST.get('description')
+        price = request.POST.get('price')
+        image = request.POST.get('image')
 
         if not all([name, description, price, image]):
             error = 'All fields are required'
+            return render(request, "add-item.html", {
+                "error": error
+            })
 
-        new_item = Item({name, description, price, image})
+        Item.objects.create(name=name, description=description, price=price, image=image)
+        return redirect(request, "index.html")
+    
+    else:
+        return render(request, "add-item.html")
 
 def get_item(request):
     if request.method == 'GET':
