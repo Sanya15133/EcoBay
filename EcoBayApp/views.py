@@ -70,6 +70,12 @@ def list_items(request):
     if request.method == 'GET':
         items = Item.db.all()
 
+        return render(request, 'index.html', {
+            'items': items
+        })
+    else:
+        return render(request, 'index.html')
+
 def list_items_by_category(request):
     if request.method == 'GET':
         items = Item.db.all()
@@ -104,14 +110,29 @@ def get_item(request):
 def list_skills(request):
     if request.method == 'GET':
         skills = Skill.db.all()
+        return render(request, 'index.html', {
+            'skills': skills
+        })
+    else:
+        return render(request, 'index.html')
 
 def add_skill(request):
+    error = None
     if request.method == 'POST':
-        skill = request.form.get('skill')
-        description = request.form.get('description')
-        date = request.form.get('date')
-        new_skill = Skill({skill, description, date})
-
+        name = request.POST.get('name')
+        amount = request.POST.get('skill')
+        description = request.POST.get('description')
+        if not all({name, amount, description}):
+            error = 'All fields required'
+            return render(request, 'add-skill.html', {
+                'error': error
+            })
+        else:
+            Skill.objects.create(name=name, description=description, amount=amount)
+            return redirect(request, 'index.html')
+    else:
+        return redirect(request, 'index.html')
+    
 def request_skill(request):
     if request.method == 'POST':
         print('hello')
