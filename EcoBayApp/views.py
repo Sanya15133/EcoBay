@@ -134,8 +134,12 @@ def add_skill(request):
         return redirect(request, 'index.html')
     
 def request_skill(request):
+    error = None
     if request.method == 'POST':
-        print('hello')
+        name = request.POST.get('name')
+        description = request.POST.get('description')
+        date_needed_by = request.POST.get('date')
+        is_complete = request.POST.get('is-complete')
 
 def make_offer(request):
     if request.method == 'POST':
