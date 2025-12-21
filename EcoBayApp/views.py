@@ -134,13 +134,25 @@ def add_skill(request):
         return redirect(request, 'index.html')
     
 def request_skill(request):
+
     error = None
+    
     if request.method == 'POST':
         name = request.POST.get('name')
         description = request.POST.get('description')
         date_needed_by = request.POST.get('date')
         is_complete = request.POST.get('is-complete')
-
+        if not all({ name, description, date_needed_by, is_complete}):
+            error = 'All fields required'
+            return render(request, 'skills-request.html', {
+                'error': error
+            })
+        else:
+            Skill.objects.create(name=name, description=description, date_needed_by=date_needed_by, is_complete=is_complete)
+            return redirect(request, 'index.html')
+    else:
+        return redirect(request, 'index.html')
+    
 def make_offer(request):
     if request.method == 'POST':
         print('bid')
