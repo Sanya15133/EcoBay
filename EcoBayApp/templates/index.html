@@ -2,6 +2,9 @@
 
 {% block content %}
     <h2>Home</h2>
+     {% if error %}
+    <p style="color: red;">{{ error }}</p>
+    {% endif %}
     <div class="main-div">
     <p>Current skills</p>
     <div class="skill-div">

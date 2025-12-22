@@ -2,7 +2,10 @@
 
 {% block content %}
     <h2>Item</h2>
-    <div>
+     {% if error %}
+    <p style="color: red;">{{ error }}</p>
+    {% endif %}
+    <div id="main">
         <p></p>
         <p></p>
         <img>

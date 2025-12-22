@@ -103,9 +103,21 @@ def add_item(request):
         return render(request, "add-item.html")
 
 def get_item(request):
+    error = None
     if request.method == 'GET':
         query = request.form.get('item')
         item = Item.db.filter(query)
+        if not query in item:
+            error = f'{query} cannot be found'
+            return render(request, 'index.html', {
+                'error': error
+            })
+        else:
+            return render(request, 'item.html', {
+                'item': item
+            })
+    else:
+        return render(request, 'index.html')
 
 def list_skills(request):
     if request.method == 'GET':
@@ -136,7 +148,7 @@ def add_skill(request):
 def request_skill(request):
 
     error = None
-    
+
     if request.method == 'POST':
         name = request.POST.get('name')
         description = request.POST.get('description')
