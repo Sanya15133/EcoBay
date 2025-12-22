@@ -5,8 +5,12 @@ from django.db import models
 class User(AbstractUser):
     id = models.CharField(max_length=40, unique=True, primary_key=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    
 
+
+class Category(models.Model):
+    id = models.CharField(max_length=40, unique=True, primary_key=True)
+    name = models.CharField(max_length=20)
+    
 class Item(models.Model):
     id = models.CharField(max_length=40, unique=True, primary_key=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -15,6 +19,7 @@ class Item(models.Model):
     amount = models.DecimalField(max_digits=5, decimal_places=2)
     is_active = models.BooleanField(default=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
 class Skill(models.Model):
     id = models.CharField(max_length=40, unique=True, primary_key=True)
@@ -24,6 +29,7 @@ class Skill(models.Model):
     amount = models.DecimalField(max_digits=5, decimal_places=2)
     is_active = models.BooleanField(default=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
 
 class Offer(models.Model):
     id = models.CharField(max_length=40, unique=True, primary_key=True)
@@ -31,9 +37,7 @@ class Offer(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
-class Category(models.Model):
-    id = models.CharField(max_length=40, unique=True, primary_key=True)
-    name = models.CharField(max_length=20)
-    
+
+
 
     

@@ -67,6 +67,7 @@ def item_categories(request):
         categories = categories.db
 
 def list_items(request):
+
     if request.method == 'GET':
         items = Item.db.all()
 
@@ -77,8 +78,9 @@ def list_items(request):
         return render(request, 'index.html')
 
 def list_items_by_category(request):
+
     if request.method == 'GET':
-        items = Item.db.all()
+        items = Item.db.filter()
 
 def add_item(request):
 
