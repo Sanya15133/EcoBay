@@ -11,13 +11,22 @@ def home(request):
 def search(request):
 
     error = None
-    
+
     if request.method == 'GET':
         query = request.form.get('search')
         result = Item.objects.all().filter(feeder__icontains=query) 
         if result is None:
+            error = f'No results found for {query}'
+            return render(request, 'index.html', {
+                'error': error
+            })
+        else:
+            return render(request, 'index.html', {
+                'items': result
+            })
 
-
+    else:
+        return render(request, 'index.html')
 
 def register(request):
     print('hello')
