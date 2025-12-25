@@ -83,9 +83,11 @@ def item_categories(request):
 
     if request.method == 'GET':
         categories = categories.db.all()
-        
-
-
+        return render(request, 'index.html', {
+            'categories': categories
+        })
+    else:
+        return render(request, 'index.html')
 
 def list_items(request):
 
