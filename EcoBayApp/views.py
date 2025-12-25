@@ -29,7 +29,7 @@ def search(request):
         return render(request, 'index.html')
 
 def register(request):
-    
+
     error = None
 
     if request.method == 'POST':
@@ -58,6 +58,7 @@ def register(request):
 def login_view(request):
 
     error = None
+
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -82,6 +83,7 @@ def item_categories(request):
 
     if request.method == 'GET':
         categories = categories.db.all()
+        
 
 
 
@@ -140,10 +142,13 @@ def add_item(request):
         return render(request, "add-item.html")
 
 def get_item(request):
+
     error = None
+
     if request.method == 'GET':
         query = request.form.get('item')
         item = Item.db.filter(query)
+
         if not query in item:
             error = f'{query} cannot be found'
             return render(request, 'index.html', {
@@ -157,6 +162,7 @@ def get_item(request):
         return render(request, 'index.html')
 
 def list_skills(request):
+
     if request.method == 'GET':
         skills = Skill.db.all()
         return render(request, 'index.html', {
@@ -166,11 +172,14 @@ def list_skills(request):
         return render(request, 'index.html')
 
 def add_skill(request):
+
     error = None
+
     if request.method == 'POST':
         name = request.POST.get('name')
         amount = request.POST.get('skill')
         description = request.POST.get('description')
+
         if not all({name, amount, description}):
             error = 'All fields required'
             return render(request, 'add-skill.html', {
@@ -191,6 +200,7 @@ def request_skill(request):
         description = request.POST.get('description')
         date_needed_by = request.POST.get('date')
         is_complete = request.POST.get('is-complete')
+
         if not all({ name, description, date_needed_by, is_complete}):
             error = 'All fields required'
             return render(request, 'skills-request.html', {
@@ -203,5 +213,8 @@ def request_skill(request):
         return redirect(request, 'index.html')
     
 def make_offer(request):
+
+    error = None
+
     if request.method == 'POST':
         print('bid')
