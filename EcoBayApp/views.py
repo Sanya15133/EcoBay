@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth import logout, authenticate, login
-from .models import Item, Skill, User
+from .models import Item, Skill, User, Category
 
 
 def home(request):
@@ -82,7 +82,7 @@ def logout(request):
 def item_categories(request):
 
     if request.method == 'GET':
-        categories = categories.db.all()
+        categories = Category.objects.all()
         return render(request, 'index.html', {
             'categories': categories
         })
@@ -92,7 +92,7 @@ def item_categories(request):
 def list_items(request):
 
     if request.method == 'GET':
-        items = Item.db.all()
+        items = Item.objects.all()
 
         return render(request, 'index.html', {
             'items': items
@@ -106,7 +106,7 @@ def list_items_by_category(request):
 
     if request.method == 'GET':
         category = request.form.get('category')
-        items = Item.db.filter(category)
+        items = Item.objects.filter(category)
 
         if items is None:
             error = 'This category has no current items'
@@ -149,7 +149,7 @@ def get_item(request):
 
     if request.method == 'GET':
         query = request.form.get('item')
-        item = Item.db.filter(query)
+        item = Item.objects.filter(query)
 
         if not query in item:
             error = f'{query} cannot be found'
@@ -166,7 +166,7 @@ def get_item(request):
 def list_skills(request):
 
     if request.method == 'GET':
-        skills = Skill.db.all()
+        skills = Skill.objects.all()
         return render(request, 'index.html', {
             'skills': skills
         })
@@ -214,7 +214,7 @@ def request_skill(request):
     else:
         return redirect(request, 'index.html')
     
-def make_offer(request):
+def make_offer(request, id):
 
     error = None
 
