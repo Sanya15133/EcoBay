@@ -13,8 +13,9 @@ def search(request):
     error = None
 
     if request.method == 'GET':
-        query = request.form.get('search')
-        result = Item.objects.all().filter(feeder__icontains=query) 
+        query = request.GET.get('search')
+        result = Item.objects.all().filter(name__icontains=query) 
+        print(result, 'result')
         if result is None:
             error = f'No results found for {query}'
             return render(request, 'index.html', {

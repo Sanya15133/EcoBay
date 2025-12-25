@@ -30,9 +30,9 @@
         <li><a href="#">Make Request</a></li>
       {% endif %}
     </ul>
-        <form class="search-container">
+        <form class="search-container" method="get" action="{% url 'search' %}">
           <input placeholder="Search..." id="search" type="search" name="search"/>
-          <button>🔍</button>
+          <button type="submit">🔍</button>
         </form>
       </div>
     </div>
