@@ -9,8 +9,15 @@ def home(request):
     return render(request, 'index.html')
 
 def search(request):
+
+    error = None
+    
     if request.method == 'GET':
         query = request.form.get('search')
+        result = Item.objects.all().filter(feeder__icontains=query) 
+        if result is None:
+
+
 
 def register(request):
     print('hello')
@@ -63,8 +70,11 @@ def logout(request):
     return redirect('index')
 
 def item_categories(request):
+
     if request.method == 'GET':
-        categories = categories.db
+        categories = categories.db.all()
+
+
 
 def list_items(request):
 
