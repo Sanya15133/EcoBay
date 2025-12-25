@@ -29,7 +29,7 @@ def search(request):
         return render(request, 'index.html')
 
 def register(request):
-    print('hello')
+    
     error = None
 
     if request.method == 'POST':
