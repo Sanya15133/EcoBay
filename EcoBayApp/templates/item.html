@@ -15,6 +15,7 @@
         <img src="{{ item.image_url }}" alt="{{ item.name }}">
         {% if user.is_authenticated %}
         <p>{{ item.amount }}</p>
+        <button type="submit">Make Offer</button>
         {% endif %}
     </div>
     {% endif %}
