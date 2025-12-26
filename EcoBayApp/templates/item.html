@@ -12,7 +12,10 @@
         <p>{{ item.amount }}</p>
         <p>{{ item.is_active }}</p>
         <p>{{ item.user }}</p>
-        <img>
+        <img src="{{ item.image_url }}" alt="{{ item.name }}">
+        {% if user.is_authenticated %}
+        <p>{{ item.amount }}</p>
+        {% endif %}
     </div>
     {% endif %}
 {% endblock %}

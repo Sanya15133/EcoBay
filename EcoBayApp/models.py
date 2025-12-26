@@ -6,13 +6,13 @@ class User(AbstractUser):
     id = models.CharField(max_length=40, unique=True, primary_key=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
-
 class Category(models.Model):
     id = models.CharField(max_length=40, unique=True, primary_key=True)
     name = models.CharField(max_length=20)
     
 class Item(models.Model):
     id = models.CharField(max_length=40, unique=True, primary_key=True)
+    image_url = models.URLField(max_length=500)
     created_at = models.DateTimeField(auto_now_add=True)
     name = models.CharField(max_length=20)
     description = models.CharField(max_length=200)
