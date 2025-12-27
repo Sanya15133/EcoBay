@@ -12,7 +12,7 @@
         <p>{{ item.amount }}</p>
         <p>{{ item.is_active }}</p>
         <p>{{ item.user }}</p>
-        <img src="{{ item.image_url }}" alt="{{ item.name }}">
+        <img src={{ item.image_url }} alt={{ item.name }}>
         {% if user.is_authenticated %}
         <p>{{ item.amount }}</p>
         <button type="submit">Make Offer</button>
