@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.contrib.auth import logout, authenticate, login
@@ -144,25 +144,20 @@ def add_item(request):
     else:
         return render(request, "add-item.html")
 
-def get_item(request):
+def get_item(request, id):
+    item = get_object_or_404(Item, id=id)
 
-    error = None
+    return render(request, 'item.html', {
+        'item': item
+    })
 
-    if request.method == 'GET':
-        query = request.form.get('item')
-        item = Item.objects.filter(query)
+def get_skill(request, id):
 
-        if not query in item:
-            error = f'{query} cannot be found'
-            return render(request, 'index.html', {
-                'error': error
-            })
-        else:
-            return render(request, 'item.html', {
-                'item': item
-            })
-    else:
-        return render(request, 'index.html')
+    skill = get_object_or_404(Skill, id=id)
+
+    return render(request, 'skill.html', {
+        'skill': skill
+    })
 
 def list_skills(request):
 

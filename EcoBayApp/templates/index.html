@@ -10,7 +10,7 @@
     {% if skills %}
      {% for skill in skills %}
     <div class="skill-div">
-        <p>{{ skill.name }}</p>
+        <a href="{% url '' %}">{{ skill.name }}</a>
        {% endfor %}
     {% endif %}
     </div>
@@ -18,7 +18,7 @@
     {% if items %}
      {% for item in items %}
         <div class="item-div">
-            <p>{{ item.name }}</p>
+            <a>{{ item.name }}</a>
         {% endfor %}
     {% endif %}
     </div>
