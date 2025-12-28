@@ -10,7 +10,7 @@
     {% if skills %}
      {% for skill in skills %}
     <div class="skill-div">
-        <a href="{% url '' %}">{{ skill.name }}</a>
+        <a href="{% url 'get_skill' id=skill_id %}">{{ skill.name }}</a>
        {% endfor %}
     {% endif %}
     </div>
@@ -18,7 +18,7 @@
     {% if items %}
      {% for item in items %}
         <div class="item-div">
-            <a>{{ item.name }}</a>
+            <a href="{% url 'get_item' id=item_id %}">{{ item.name }}</a>
         {% endfor %}
     {% endif %}
     </div>
