@@ -22,4 +22,3 @@ class CategoryTestModel(TestCase):
     
     def test_category_in_db(self):
         categories = Category.objects.all()
-        print(categories)
