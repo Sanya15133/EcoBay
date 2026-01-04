@@ -26,3 +26,13 @@ class CategoryTestModel(TestCase):
         assert len(categories) != 0
 
 
+class ItemTestModel(TestCase):
+    def setUp(self):
+        self.item = baker.make(Item)
+    
+    def test_item_created(self):
+        self.assertIsNotNone(self.item.pk)
+    
+    def test_item_in_db(self):
+        items = Item.objects.all()
+        assert len(items) != 0
