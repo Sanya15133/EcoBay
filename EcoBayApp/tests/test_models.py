@@ -11,6 +11,7 @@ class UserTestModel(TestCase):
     
     def test_user_in_db(self):
         users = User.objects.all()
+        assert len(users) != 0    
 
 
 class CategoryTestModel(TestCase):
@@ -22,3 +23,6 @@ class CategoryTestModel(TestCase):
     
     def test_category_in_db(self):
         categories = Category.objects.all()
+        assert len(categories) != 0
+
+
