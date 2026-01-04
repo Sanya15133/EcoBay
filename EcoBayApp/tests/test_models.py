@@ -36,3 +36,14 @@ class ItemTestModel(TestCase):
     def test_item_in_db(self):
         items = Item.objects.all()
         assert len(items) != 0
+
+class SkillTestModel(TestCase):
+    def setUp(self):
+        self.skill = baker.make(Skill)
+    
+    def test_skill_created(self):
+        self.assertIsNotNone(self.skill.pk)
+    
+    def test_skill_in_db(self):
+        skills = Skill.objects.all()
+        assert len(skills) != 0
