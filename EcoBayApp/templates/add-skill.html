@@ -3,13 +3,12 @@
 {% block content %}
     <h2>Add Skill</h2>
     <div class="main-div">
-     <form method="POST">
-        <label>Skill</label><input type="text">
-        <label>Description</label><input type="text">
-        <label>Date</label><input type="date">
-        <label>Price</label><input type="number">
-        <label>Bids</label><input type="number">
-        <label>Image link</label><input type="url">
+     <form method="{% url 'add_skill'  %}">
+        <label for="skill-name">Skill</label><input name='skill-name' type="text">
+        <label for="description">Description</label><input name='description' type="text">
+        <label for="date">Date</label><input name='date' type="date">
+        <label for="price">Price</label><input name='price' type="number">
+        <label for="image">Image link</label><input name='image' type="url">
         <button type="submit">Add</button>
      </form>
     </div>
