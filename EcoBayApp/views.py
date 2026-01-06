@@ -59,7 +59,7 @@ def register(request):
                 password=password
             )
 
-            return render(request, 'index.html')
+            return redirect('')
     
     return render(request, 'register.html')
 
