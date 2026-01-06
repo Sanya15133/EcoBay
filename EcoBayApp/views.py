@@ -74,7 +74,7 @@ def login_view(request):
 
         if user is not None:
             login(request, user)
-            return HttpResponseRedirect(reverse("index"))
+            return HttpResponseRedirect(reverse(""))
         else:
             error = "Invalid username and/or password."
             return render(request, "login.html", {
@@ -85,7 +85,7 @@ def login_view(request):
 
 def logout(request):
     logout(request)
-    return redirect('index')
+    return redirect('')
 
 def item_categories(request):
 
