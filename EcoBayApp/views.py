@@ -37,14 +37,21 @@ def register(request):
         username = request.POST.get('username')
         email = request.POST.get('email')
         password = request.POST.get('password')
-        confirm_password = request.POST.get('confirm-password')
+        confirm_password = request.POST.get('confirm_password')
+
+        if password != confirm_password:
+            error = "Passwords do not match."
+            return render(request, "register.html", {"error": error})
 
         if not all([username, email, password, confirm_password]):
             error = "All fields are required."
             return render(request, "register.html", {"error": error})
-        elif password != confirm_password:
-            error = "Passwords do not match."
-            return render(request, "register.html", {"error": error})
+
+        if User.objects.filter(username=username):
+            error = 'User already exists'
+            return render(request, 'login.html',{
+                'error': error
+            })
         else:
             User.objects.create_user(
                 username=username,
@@ -52,9 +59,9 @@ def register(request):
                 password=password
             )
 
-            return redirect(request, "index.html")
+            return render(request, 'index.html')
     
-    return render(request, 'register.html', {'error': error})
+    return render(request, 'register.html')
 
 def login_view(request):
 
