@@ -222,4 +222,5 @@ def make_offer(request, id):
     error = None
 
     if request.method == 'POST':
-        print('bid')
+        get_bid = request.POST.get('bid-amount')
+        
