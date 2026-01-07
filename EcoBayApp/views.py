@@ -14,9 +14,9 @@ def search(request):
 
     if request.method == 'GET':
         query = request.GET.get('search')
-        result = Item.objects.all().filter(name__icontains=query) 
+        result = Item.objects.filter(name__icontains=query) 
         print(result, 'result')
-        if result is None:
+        if not result.exists():
             error = f'No results found for {query}'
             return render(request, 'index.html', {
                 'error': error
@@ -59,7 +59,7 @@ def register(request):
                 password=password
             )
 
-            return redirect('')
+            return redirect('home')
     
     return render(request, 'register.html')
 
