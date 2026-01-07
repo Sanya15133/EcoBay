@@ -3,7 +3,7 @@
 {% block content %}
     <h2>Add Skill</h2>
     <div class="main-div">
-     <form method="{% url 'add_skill'  %}">
+     <form method='post' action="{% url 'add_skill'  %}">
         <label for="skill-name">Skill</label><input name='skill-name' type="text">
         <label for="description">Description</label><input name='description' type="text">
         <label for="date">Date</label><input name='date' type="date">

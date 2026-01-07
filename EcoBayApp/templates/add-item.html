@@ -3,7 +3,7 @@
 {% block content %}
     <h2>Add Item</h2>
     <div class="main-div">
-     <form method="{% url 'add_item'  %}">
+     <form method='post' action="{% url 'add_item'  %}">
         <label for="name">Item</label><input name='name' type="text">
         <label for="description">Description</label><input name='description' type="text">
         <label for="date">Date</label><input name='date' type="date">

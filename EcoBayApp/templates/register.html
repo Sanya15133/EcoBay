@@ -6,7 +6,7 @@
     <p style="color: red;">{{ error }}</p>
     {% endif %}
     <div>
-    <form method="POST">
+    <form method='post' action="{% url 'register'  %}">
     {% csrf_token %}
     <p>
     <label for="username">Username</label>
@@ -26,6 +26,5 @@
     </p>
     <button type="submit">Submit</button>
 </form>
-
     </div>
 {% endblock %}

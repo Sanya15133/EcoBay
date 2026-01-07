@@ -39,12 +39,12 @@ def register(request):
         password = request.POST.get('password')
         confirm_password = request.POST.get('confirm_password')
 
-        if password != confirm_password:
-            error = "Passwords do not match."
-            return render(request, "register.html", {"error": error})
-
         if not all([username, email, password, confirm_password]):
             error = "All fields are required."
+            return render(request, "register.html", {"error": error})
+
+        if password != confirm_password:
+            error = "Passwords do not match."
             return render(request, "register.html", {"error": error})
 
         if User.objects.filter(username=username):
@@ -59,7 +59,12 @@ def register(request):
                 password=password
             )
 
-            return redirect('home')
+            user = authenticate(username=username, password=password)
+
+            if user:
+                
+                login(request, user)
+                return redirect('home')
     
     return render(request, 'register.html')
 
