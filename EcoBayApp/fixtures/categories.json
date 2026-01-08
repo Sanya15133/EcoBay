@@ -1,0 +1,23 @@
+[
+  {
+    "model": "EcoBayApp.category",
+    "pk": 1,
+    "fields": {
+      "name": "Electronics"
+    }
+  },
+  {
+    "model": "EcoBayApp.category",
+    "pk": 2,
+    "fields": {
+      "name": "Books"
+    }
+  },
+  {
+    "model": "EcoBayApp.category",
+    "pk": 3,
+    "fields": {
+      "name": "Clothing"
+    }
+  }
+]
