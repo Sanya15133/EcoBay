@@ -62,7 +62,7 @@ def register(request):
             user = authenticate(username=username, password=password)
 
             if user:
-                
+
                 login(request, user)
                 return redirect('home')
     
@@ -79,7 +79,7 @@ def login_view(request):
 
         if user is not None:
             login(request, user)
-            return HttpResponseRedirect(reverse(""))
+            return redirect("home")
         else:
             error = "Invalid username and/or password."
             return render(request, "login.html", {
@@ -88,9 +88,9 @@ def login_view(request):
     else:
         return render(request, "login.html")
 
-def logout(request):
+def logout_view(request):
     logout(request)
-    return redirect('')
+    return redirect('home')
 
 def item_categories(request):
 
@@ -151,7 +151,7 @@ def add_item(request):
             })
 
         Item.objects.create(name=name, description=description, price=price, image=image)
-        return redirect(request, "index.html")
+        return render(request, "index.html")
     
     else:
         return render(request, "add-item.html")
@@ -197,9 +197,9 @@ def add_skill(request):
             })
         else:
             Skill.objects.create(name=name, description=description, amount=amount)
-            return redirect(request, 'index.html')
+            return render(request, 'index.html')
     else:
-        return redirect(request, 'index.html')
+        return render(request, 'add-skill.html')
     
 def request_skill(request):
 
@@ -218,9 +218,9 @@ def request_skill(request):
             })
         else:
             Skill.objects.create(name=name, description=description, date_needed_by=date_needed_by, is_complete=is_complete)
-            return redirect(request, 'index.html')
+            return render(request, 'index.html')
     else:
-        return redirect(request, 'index.html')
+        return render(request, 'index.html')
     
 def make_offer(request, id):
 

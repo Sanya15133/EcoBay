@@ -1,0 +1,28 @@
+[
+  {
+    "model": "EcoBayApp.item",
+    "pk": 1,
+    "fields": {
+      "image_url": "https://example.com/images/laptop.jpg",
+      "name": "Laptop",
+      "description": "Refurbished laptop in good condition",
+      "amount": "499.99",
+      "is_active": true,
+      "user": 1,
+      "category": 1
+    }
+  },
+  {
+    "model": "EcoBayApp.item",
+    "pk": 2,
+    "fields": {
+      "image_url": "https://example.com/images/book.jpg",
+      "name": "Book Set",
+      "description": "Collection of used programming books",
+      "amount": "79.50",
+      "is_active": true,
+      "user": 1,
+      "category": 2
+    }
+  }
+]
