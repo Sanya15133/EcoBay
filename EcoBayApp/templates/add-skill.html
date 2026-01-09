@@ -4,11 +4,21 @@
     <h2>Add Skill</h2>
     <div class="main-div">
      <form method='post' action="{% url 'add_skill'  %}">
+        <p>
         <label for="skill-name">Skill</label><input name='skill-name' type="text">
+        </p>
+        <p>
         <label for="description">Description</label><input name='description' type="text">
+        </p>
+        <p>
         <label for="date">Date</label><input name='date' type="date">
+        </p>
+        <p>
         <label for="price">Price</label><input name='price' type="number">
+        </p>
+        <p>
         <label for="image">Image link</label><input name='image' type="url">
+        </p>
         <button type="submit">Add</button>
      </form>
     </div>

@@ -6,12 +6,18 @@
     {% if error %}
     <p style="color: red;">{{ error }}</p>
     {% endif %}
+    </div>
+    <div>
         <form method='post' action="{% url 'login_view'  %}">
               {% csrf_token %}
+              <p>
             <label id="username"  for="username">Username</label>
             <input id="username" name="username" required>
+            </p>
+            <p>
             <label id="password" for="password">Password</label>
             <input id="password" name="password" type="password" required>
+            </p>
            <button type="submit">Sign In</button>
         </form>
     </div>

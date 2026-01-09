@@ -220,12 +220,14 @@ def request_skill(request):
             Skill.objects.create(name=name, description=description, date_needed_by=date_needed_by, is_complete=is_complete)
             return render(request, 'index.html')
     else:
-        return render(request, 'index.html')
+        return render(request, 'skills-request.html')
     
-def make_offer(request, id):
+def make_offer(request):
 
     error = None
+    id = item.id
 
     if request.method == 'POST':
         get_bid = request.POST.get('bid-amount')
+
         

@@ -3,10 +3,16 @@
 {% block content %}
     <h2>Skill</h2>
     <div>
-        <form >
-            <label>Skill</label><input>
-            <label>Description</label><input>
-            <label>Date</label><input>
+        <form method="post">
+            <p>
+            <label for="name">Skill</label><input name="name">
+            </p>
+            <p>
+            <label for="description">Description</label><input name="description">
+            </p>
+            <p>
+            <label for="date">Date</label><input name="date">
+            </p>
             <button type="submit">Submit</button>
         </form>
     </div>
