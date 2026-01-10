@@ -11,6 +11,7 @@ urlpatterns = [
     path('add-item/', views.add_item, name='add_item'),
     path('add-skill/', views.add_skill, name='add_skill'),
     path('search/', views.search, name='search'),
+    path('item/<int:id>/make_offer', views.make_offer, name='make_offer'),
     path('item/<int:id>/', views.get_item, name='get_item'),
     path('skill/<int:id>/', views.get_skill, name='get_skill'),
     path('', views.home, name='home'),

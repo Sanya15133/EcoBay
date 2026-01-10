@@ -222,10 +222,9 @@ def request_skill(request):
     else:
         return render(request, 'skills-request.html')
     
-def make_offer(request):
+def make_offer(request, id):
 
     error = None
-    id = item.id
 
     if request.method == 'POST':
         get_bid = request.POST.get('bid-amount')
