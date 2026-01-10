@@ -227,6 +227,16 @@ def make_offer(request, id):
     error = None
 
     if request.method == 'POST':
-        get_bid = request.POST.get('bid-amount')
+        get_bid = int(request.POST.get('bid-amount'))
+        current_bid = int(request.GET.get('current-bid'))
+        if get_bid < current_bid:
+            error = 'Your bid must be higher than current one'
+            return render(request, 'item/{id}', {
+                'error': error
+            })
+    
+    else:
+        return render(request, 'item/{id}')
+
 
         
