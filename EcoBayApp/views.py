@@ -225,18 +225,26 @@ def request_skill(request):
 def make_offer(request, id):
 
     error = None
+    item = get_object_or_404(Item, id=id)
 
     if request.method == 'POST':
-        get_bid = int(request.POST.get('bid-amount'))
-        current_bid = int(request.GET.get('current-bid'))
-        if get_bid < current_bid:
-            error = 'Your bid must be higher than current one'
-            return render(request, 'item/{id}', {
-                'error': error
-            })
+        bid_amount = request.POST.get('bid-amount')
+
+        if not bid_amount:
+            error = 'Please enter a bid'
+            return render(request, 'item.html', {
+                        'error': error})
+        else:
+            bid_amount = int(bid_amount)
+
+            if bid_amount <= int(item.amount):
+                error = 'Your bid must be higher than the current bid'
+            else:
+                item.amount = bid_amount
+                item.save()
     
-    else:
-        return render(request, 'item/{id}')
+    return render(request, 'item.html')
+    
 
 
         
