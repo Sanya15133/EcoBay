@@ -232,8 +232,9 @@ def make_offer(request, id):
 
         if not bid_amount:
             error = 'Please enter a bid'
-            return render(request, 'item.html', {
-                        'error': error})
+            return HttpResponseRedirect(request.path_info, {
+            'error': error
+            })
         else:
             bid_amount = int(bid_amount)
 
@@ -242,8 +243,10 @@ def make_offer(request, id):
             else:
                 item.amount = bid_amount
                 item.save()
-    
-    return render(request, 'item.html')
+                return HttpResponseRedirect(request.path_info)
+
+    return HttpResponseRedirect(request.path_info)
+
     
 
 
