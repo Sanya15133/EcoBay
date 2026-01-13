@@ -1,26 +1,35 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-    <h2>Home</h2>
-     {% if error %}
-    <p style="color: red;">{{ error }}</p>
-    {% endif %}
-    <div class="main-div">
+<h2>Home</h2>
+
+{% if error %}
+<p style="color: red;">{{ error }}</p>
+{% endif %}
+
+<div class="main-div">
     <p>Current skills</p>
     {% if skills %}
-     {% for skill in skills %}
-    <div class="skill-div">
-        <a href="{% url 'get_skill' skill_id %}">{{ skill.name }}</a>
-       {% endfor %}
-    {% endif %}
-    </div>
-    <p>Current Items</p>
-    {% if items %}
-     {% for item in items %}
-        <div class="item-div">
-            <a href="{% url 'get_item' item_id %}">{{ item.name }}</a>
+        {% for skill in skills %}
+            <div class="skill-div">
+            <a href="{% url 'get_skill' skill.id %}">
+            {{ skill.name }}
+            </a>
+            </div>
         {% endfor %}
     {% endif %}
-    </div>
-    </div>
+</div>
+
+<div class="main-div">
+    <p>Current Items</p>
+    {% if items %}
+        {% for item in items %}
+        <div class="item-div">
+        <a href="{% url 'get_item' item.id %}">
+        {{ item.name }}
+        </a>
+        </div>
+        {% endfor %}
+    {% endif %}
+</div>
 {% endblock %}

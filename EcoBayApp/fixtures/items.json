@@ -4,6 +4,7 @@
     "pk": 1,
     "fields": {
       "image_url": "https://example.com/images/laptop.jpg",
+      "created_at": "2025-01-12T10:30:00Z",
       "name": "Laptop",
       "description": "Refurbished laptop in good condition",
       "amount": "499.99",
@@ -17,6 +18,7 @@
     "pk": 2,
     "fields": {
       "image_url": "https://example.com/images/book.jpg",
+      "created_at": "2025-01-12T10:30:00Z",
       "name": "Book Set",
       "description": "Collection of used programming books",
       "amount": "79.50",

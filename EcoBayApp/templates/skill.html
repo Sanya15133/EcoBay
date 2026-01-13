@@ -2,18 +2,23 @@
 
 {% block content %}
     <h2>Skill</h2>
-    <div>
-        <form method="post">
-            <p>
-            <label for="name">Skill</label><input name="name">
-            </p>
-            <p>
-            <label for="description">Description</label><input name="description">
-            </p>
-            <p>
-            <label for="date">Date</label><input name="date">
-            </p>
-            <button type="submit">Submit</button>
+     {% if error %}
+    <p style="color: red;">{{ error }}</p>
+    {% endif %}
+    <div id="main">
+        {% if skill %}
+        <p>{{ skill.name }}</p>
+        <p> {{ skill.description }}</p>
+        <p id="current-bid">{{ skill.amount }}</p>
+        <p>{{ skill.is_active }}</p>
+        <p>{{ skill.user }}</p>
+        {% if user.is_authenticated %}
+        <form method='post' action="{% url 'make_offer' skill.id %}">
+        <label for="bid-amount"></label>
+        <input name="bid-amount" type='number' placeholder="{{ skill.amount }}"></input>
+        <button type="submit">Make Offer</button>
         </form>
+        {% endif %}
     </div>
-{% endblock %}
+{% endif %}
+{% endblock  %}

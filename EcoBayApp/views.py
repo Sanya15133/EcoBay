@@ -6,7 +6,16 @@ from .models import Item, Skill, User, Category
 
 
 def home(request):
-    return render(request, 'index.html')
+    try:
+        skills = Skill.objects.all()
+        items = Item.objects.all()
+    except Exception as e:
+        return render(request, 'index.html', {'error': str(e)})
+
+    return render(request, 'index.html', {
+        'skills': skills,
+        'items': items,
+    })
 
 def search(request):
 
@@ -102,17 +111,6 @@ def item_categories(request):
     else:
         return render(request, 'index.html')
 
-def list_items(request):
-
-    if request.method == 'GET':
-        items = Item.objects.all()
-
-        return render(request, 'index.html', {
-            'items': items
-        })
-    else:
-        return render(request, 'index.html')
-
 def list_items_by_category(request):
 
     error = None
@@ -171,15 +169,6 @@ def get_skill(request, id):
         'skill': skill
     })
 
-def list_skills(request):
-
-    if request.method == 'GET':
-        skills = Skill.objects.all()
-        return render(request, 'index.html', {
-            'skills': skills
-        })
-    else:
-        return render(request, 'index.html')
 
 def add_skill(request):
 
