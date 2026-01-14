@@ -3,7 +3,7 @@
     "model": "EcoBayApp.item",
     "pk": 1,
     "fields": {
-      "image_url": "https://example.com/images/laptop.jpg",
+      "image_url": "https://hw-egypt.com/wp-content/uploads/2024/03/Designer-2024-03-14T110410.267.jpeg",
       "created_at": "2025-01-12T10:30:00Z",
       "name": "Laptop",
       "description": "Refurbished laptop in good condition",
@@ -17,7 +17,7 @@
     "model": "EcoBayApp.item",
     "pk": 2,
     "fields": {
-      "image_url": "https://example.com/images/book.jpg",
+      "image_url": "https://sanet.pics/storage-5/1119/7pp9ycslRLe8uZcLZJ9Ey8GZRBYMMvaU.jpg",
       "created_at": "2025-01-12T10:30:00Z",
       "name": "Book Set",
       "description": "Collection of used programming books",
