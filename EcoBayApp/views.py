@@ -105,11 +105,11 @@ def item_categories(request):
 
     if request.method == 'GET':
         categories = Category.objects.all()
-        return render(request, 'index.html', {
+        print(categories, 'hello')
+        
+        return render(request, 'add-item.html', {
             'categories': categories
         })
-    else:
-        return render(request, 'index.html')
 
 def list_items_by_category(request):
 
