@@ -1,16 +1,22 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
-from django.urls import reverse
 from django.contrib.auth import logout, authenticate, login
 from .models import Item, Skill, User, Category
 
 
 def home(request):
-    try:
+
+    print(request.user, 'here')
+    error = None
+    
+    if request.method == 'GET':
+
         skills = Skill.objects.all()
         items = Item.objects.all()
-    except Exception as e:
-        return render(request, 'index.html', {'error': str(e)})
+
+        if not items:
+            error = 'No items/skills to be displayed'
+            return render(request, 'index.html', {'error': error})
 
     return render(request, 'index.html', {
         'skills': skills,
@@ -141,6 +147,9 @@ def add_item(request):
         description = request.POST.get('description')
         amount = request.POST.get('price')
         image_url = request.POST.get('image')
+        user = request.user
+        id = user.id
+        print(user.name, id, 'here')
 
         if not all([name, description, amount, image_url]):
             error = 'All fields are required'
@@ -148,7 +157,7 @@ def add_item(request):
                 "error": error
             })
 
-        Item.objects.create(name=name, description=description, amount=amount, image_url=image_url)
+        Item.objects.create(name=name, description=description, amount=amount, image_url=image_url, user=user.id)
         return render(request, "index.html")
     
     else:
