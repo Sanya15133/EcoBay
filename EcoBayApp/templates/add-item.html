@@ -12,9 +12,6 @@
         <label for="description">Description</label><input name='description' type="text">
         </p>
         <p>
-        <label for="date">Date</label><input name='date' type="date">
-        </p>
-        <p>
         <label for="price">Price</label><input name='price' type="number">
         </p>
         <p>
@@ -25,7 +22,7 @@
         <select name="category" type="text">
         <option value="">Select Category</option>
         {% for category in categories %}
-        <option value="{{ category.id }}">{{ category.name }}</option>
+        <option value="{{ category.id }}" name="{{ category_id }}">{{ category.name }}</option>
         {% endfor %}
         </select>
         </p>

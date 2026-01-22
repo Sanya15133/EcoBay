@@ -6,21 +6,17 @@ from .models import Item, Skill, User, Category
 
 def home(request):
 
-    print(request.user, 'here')
+    skills = Skill.objects.all()
+    items = Item.objects.all()
+
     error = None
-    
-    if request.method == 'GET':
-
-        skills = Skill.objects.all()
-        items = Item.objects.all()
-
-        if not items:
-            error = 'No items/skills to be displayed'
-            return render(request, 'index.html', {'error': error})
+    if not skills.exists() and not items.exists():
+        error = 'No items or skills to be displayed'
 
     return render(request, 'index.html', {
         'skills': skills,
         'items': items,
+        'error': error,
     })
 
 def search(request):
@@ -141,23 +137,30 @@ def list_items_by_category(request):
 def add_item(request):
 
     error = None
+    user = request.user
+    if request.method == 'GET':
+        categories = Category.objects.all()
+        return render(request, 'add-item.html', {
+            'categories': categories
+        })
 
     if request.method == 'POST':
         name = request.POST.get('name')
         description = request.POST.get('description')
         amount = request.POST.get('price')
         image_url = request.POST.get('image')
-        user = request.user
-        id = user.id
-        print(user.name, id, 'here')
+        category_id = request.POST.get('category')
+        category = Category.objects.get(id=category_id)
 
-        if not all([name, description, amount, image_url]):
+        if not all([name, description, amount, image_url, category]):
             error = 'All fields are required'
             return render(request, "add-item.html", {
                 "error": error
             })
 
-        Item.objects.create(name=name, description=description, amount=amount, image_url=image_url, user=user.id)
+        Item.objects.create(name=name, description=description, category=category, amount=amount,
+        image_url=image_url, user=user)
+
         return render(request, "index.html")
     
     else:
