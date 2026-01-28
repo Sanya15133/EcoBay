@@ -10,7 +10,7 @@
         <p>{{ item.name }}</p>
         <p> {{ item.description }}</p>
         <p id="current-bid">{{ item.amount }}</p>
-        <p>{{ item.is_active }}</p>
+        <p>{{ item.created_at }}</p>
         <p>{{ item.user }}</p>
         <img src={{ item.image_url }} alt={{ item.name }}>
         {% if user.is_authenticated %}
