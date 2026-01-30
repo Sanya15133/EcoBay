@@ -10,7 +10,7 @@
         <p>{{ skill.name }}</p>
         <p> {{ skill.description }}</p>
         <p id="current-bid">{{ skill.amount }}</p>
-        <p>{{ skill.is_active }}</p>
+        <p>{{ skill.is_created }}</p>
         <p>{{ skill.user }}</p>
         {% if user.is_authenticated %}
         <form method='post' action="{% url 'make_offer' skill.id %}">
