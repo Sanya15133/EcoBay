@@ -185,10 +185,11 @@ def get_skill(request, id):
 def add_skill(request):
 
     error = None
+    user = request.user
 
     if request.method == 'POST':
         name = request.POST.get('name')
-        amount = request.POST.get('skill')
+        amount = request.POST.get('amount')
         description = request.POST.get('description')
 
         if not all({name, amount, description}):
