@@ -160,8 +160,7 @@ def add_item(request):
 
         Item.objects.create(name=name, description=description, category=category, amount=amount,
         image_url=image_url, user=user)
-        return render(request, "index.html")
-    
+        return redirect('home')
     else:
         return render(request, "add-item.html")
 
@@ -206,7 +205,7 @@ def add_skill(request):
             })
         else:
             Skill.objects.create(name=name, description=description, amount=amount, category=category, user=user)
-            return render(request, 'index.html')
+            return redirect('home')
     else:
         return render(request, 'add-skill.html')
     
