@@ -160,7 +160,6 @@ def add_item(request):
 
         Item.objects.create(name=name, description=description, category=category, amount=amount,
         image_url=image_url, user=user)
-
         return render(request, "index.html")
     
     else:
@@ -187,18 +186,26 @@ def add_skill(request):
     error = None
     user = request.user
 
+    if request.method == 'GET':
+        categories = Category.objects.all()
+        return render(request, 'add-skill.html', {
+            'categories': categories
+        })
+
     if request.method == 'POST':
         name = request.POST.get('name')
         amount = request.POST.get('amount')
         description = request.POST.get('description')
+        category_id = request.POST.get('category')
+        category = Category.objects.get(id=category_id)
 
-        if not all({name, amount, description}):
+        if not all({name, amount, description, category}):
             error = 'All fields required'
             return render(request, 'add-skill.html', {
                 'error': error
             })
         else:
-            Skill.objects.create(name=name, description=description, amount=amount)
+            Skill.objects.create(name=name, description=description, amount=amount, category=category, user=user)
             return render(request, 'index.html')
     else:
         return render(request, 'add-skill.html')
