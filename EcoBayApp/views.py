@@ -256,6 +256,12 @@ def make_offer(request, id):
     return HttpResponseRedirect(request.path_info)
 
     
+def delete_item(request):
+    pass
+
+
+def delete_skill(request):
+    pass
 
 
         
