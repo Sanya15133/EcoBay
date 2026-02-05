@@ -257,11 +257,19 @@ def make_offer(request, id):
 
     
 def delete_item(request):
-    pass
+    
+    error = None
+    item = get_object_or_404(Item, id=id)
+    user = request.user
+
+
 
 
 def delete_skill(request):
-    pass
+    
+    error = None
+    skill = get_object_or_404(Skill, id=id)
+    user = request.user
 
 
         
