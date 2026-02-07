@@ -165,8 +165,8 @@ def add_item(request):
         return render(request, "add-item.html")
 
 def get_item(request, id):
-    item = get_object_or_404(Item, id=id)
 
+    item = get_object_or_404(Item, id=id)
     return render(request, 'item.html', {
         'item': item
     })
@@ -256,20 +256,30 @@ def make_offer(request, id):
     return HttpResponseRedirect(request.path_info)
 
     
-def delete_item(request):
+def delete_item(request, id):
     
     error = None
+    user = request.user
     item = get_object_or_404(Item, id=id)
-    user = request.user
 
 
 
-
-def delete_skill(request):
+def delete_skill(request, id):
     
     error = None
-    skill = get_object_or_404(Skill, id=id)
     user = request.user
+    skill = get_object_or_404(Skill, id=id)
+
+    if user == skill.user:
+        print(user, skill.user)
+
+
+    if request.method == 'DELETE':
+        skill.delete()
+        return HttpResponseRedirect(request.path_info)
+
+
+
 
 
         
