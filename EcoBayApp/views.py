@@ -22,19 +22,24 @@ def home(request):
 def search(request):
 
     error = None
+    query = request.GET.get('search')
+
+    if not query:
+        return render(request, 'index.html')
 
     if request.method == 'GET':
-        query = request.GET.get('search')
-        result = Item.objects.filter(name__icontains=query) 
-        print(result, 'result')
-        if not result.exists():
+        items = Item.objects.filter(name__icontains=query)
+        skills = Skill.objects.filter(name__icontains=query)
+             
+        if not items.exists() and not skills.exists():
             error = f'No results found for {query}'
             return render(request, 'index.html', {
                 'error': error
             })
         else:
             return render(request, 'index.html', {
-                'items': result
+                'items': items,
+                'skills': skills
             })
 
     else:
