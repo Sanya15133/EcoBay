@@ -16,10 +16,14 @@
         {% if user.is_authenticated %}
         <form method='post' action="{% url 'make_offer' item.id %}">
         <label for="bid-amount"></label>
+        {%  if request.user != item.user  %}
         <input name="bid-amount" type='number' placeholder="{{ item.amount }}"></input>
         <button type="submit">Make Offer</button>
         </form>
+        {% endif %}
+        {%  if request.user == item.user  %}
         <button>Delete Item</button>
+        {% endif %}
         {% endif %}
     </div>
 {% endif %}

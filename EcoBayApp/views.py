@@ -41,7 +41,6 @@ def search(request):
                 'items': items,
                 'skills': skills
             })
-
     else:
         return render(request, 'index.html')
 
