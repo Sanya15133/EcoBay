@@ -14,11 +14,15 @@
         <p>{{ skill.user }}</p>
         {% if user.is_authenticated %}
         <form method='post' action="{% url 'make_offer' skill.id %}">
+        {%  if request.user != item.user  %}
         <label for="bid-amount"></label>
         <input name="bid-amount" type='number' placeholder="{{ skill.amount }}"></input>
         <button type="submit">Make Offer</button>
+        {% endif %}
         </form>
+        {%  if request.user == item.user  %}
         <button>Delete Skill</button>
+        {% endif %}
         {% endif %}
     </div>
 {% endif %}
