@@ -235,50 +235,48 @@ def request_skill(request):
         return render(request, 'skills-request.html')
     
 def make_offer(request, id):
-
-    error = None
+    
     item = get_object_or_404(Item, id=id)
+    error = None
 
     if request.method == 'POST':
         bid_amount = request.POST.get('bid-amount')
 
         if not bid_amount:
             error = 'Please enter a bid'
-            return HttpResponseRedirect(request.path_info, {
-            'error': error
-            })
         else:
             bid_amount = int(bid_amount)
 
-            if bid_amount <= int(item.amount):
+            if bid_amount <= item.amount:
                 error = 'Your bid must be higher than the current bid'
             else:
                 item.amount = bid_amount
                 item.save()
-                return HttpResponseRedirect(request.path_info)
+                return redirect('item', id=item.id)
 
-    return HttpResponseRedirect(request.path_info)
+    return render(request, 'item.html', {
+        'item': item,
+        'error': error,
+    })
 
     
 def delete_item(request, id):
+
+    print(id)
     
-    error = None
     user = request.user
     item = get_object_or_404(Item, id=id)
 
-
+    if user == item.user:
+        item.delete()
+        return HttpResponseRedirect(request.path_info)
 
 def delete_skill(request, id):
     
-    error = None
     user = request.user
     skill = get_object_or_404(Skill, id=id)
 
     if user == skill.user:
-        print(user, skill.user)
-
-
-    if request.method == 'DELETE':
         skill.delete()
         return HttpResponseRedirect(request.path_info)
 

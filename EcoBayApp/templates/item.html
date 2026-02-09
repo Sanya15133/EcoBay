@@ -1,30 +1,42 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-    <h2>Item</h2>
-     {% if error %}
-    <p style="color: red;">{{ error }}</p>
-    {% endif %}
-    <div id="main">
-        {% if item %}
-        <p>{{ item.name }}</p>
-        <p> {{ item.description }}</p>
-        <p id="current-bid">{{ item.amount }}</p>
-        <p>{{ item.created_at }}</p>
-        <p>{{ item.user }}</p>
-        <img src={{ item.image_url }} alt={{ item.name }}>
-        {% if user.is_authenticated %}
-        <form method='post' action="{% url 'make_offer' item.id %}">
-        {%  if request.user != item.user  %}
-        <label for="bid-amount"></label>
-        <input name="bid-amount" type='number' placeholder="{{ item.amount }}"></input>
-        <button type="submit">Make Offer</button>
+<h2>Item</h2>
+
+{% if error %}
+<p style="color:red;">{{ error }}</p>
+{% endif %}
+
+{% if item %}
+<div id="main">
+    <p>{{ item.name }}</p>
+    <p>{{ item.description }}</p>
+    <p id="current-bid">{{ item.amount }}</p>
+    <p>{{ item.created_at }}</p>
+    <p>{{ item.user }}</p>
+    <img src="{{ item.image_url }}" alt="{{ item.name }}">
+
+    {% if user.is_authenticated %}
+        {% if request.user != item.user %}
+        <form method="post" action="{% url 'make_offer' item.id %}">
+            {% csrf_token %}
+            <input
+                type="number"
+                name="bid-amount"
+                min="{{ item.amount|add:1 }}"
+                required
+            >
+            <button type="submit">Make Offer</button>
         </form>
         {% endif %}
-        {%  if request.user == item.user  %}
-        <button>Delete Item</button>
+        {% if request.user == item.user %}
+        <form method="post" action="{% url 'delete_item' item.id %}">
+            {% csrf_token %}
+            <button type="submit">Delete Item</button>
+        </form>
         {% endif %}
-        {% endif %}
-    </div>
+    {% endif %}
+</div>
 {% endif %}
-{% endblock  %}
+{% endblock %}
+
