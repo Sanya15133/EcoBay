@@ -261,8 +261,6 @@ def make_offer(request, id):
 
     
 def delete_item(request, id):
-
-    print(id)
     
     user = request.user
     item = get_object_or_404(Item, id=id)
