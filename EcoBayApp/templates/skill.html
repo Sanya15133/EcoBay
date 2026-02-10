@@ -5,22 +5,31 @@
      {% if error %}
     <p style="color: red;">{{ error }}</p>
     {% endif %}
+    {% if skill %}
     <div id="main">
-        {% if skill %}
         <p>{{ skill.name }}</p>
         <p> {{ skill.description }}</p>
         <p id="current-bid">{{ skill.amount }}</p>
         <p>{{ skill.is_created }}</p>
         <p>{{ skill.user }}</p>
         {% if user.is_authenticated %}
-        <form method='post' action="{% url 'make_offer' skill.id %}">
         {%  if request.user != item.user  %}
-        <label for="bid-amount"></label>
-        <input name="bid-amount" type='number' placeholder="{{ skill.amount }}"></input>
+        <form method='post' action="{% url 'make_offer' skill.id %}">
+        {% csrf_token %}
+        <input
+                type="number"
+                name="bid-amount"
+                min="{{ skill.amount|add:1 }}"
+                required
+            >
         <button type="submit">Make Offer</button>
+         </form>
         {% endif %}
-        </form>
         {%  if request.user == item.user  %}
+         <form method="post" action="{% url 'delete_skill' skill.id %}">
+            {% csrf_token %}
+        <button type="submit">Delete Skill</button>
+        </form>
         <button>Delete Skill</button>
         {% endif %}
         {% endif %}
