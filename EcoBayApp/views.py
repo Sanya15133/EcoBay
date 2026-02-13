@@ -111,7 +111,6 @@ def item_categories(request):
 
     if request.method == 'GET':
         categories = Category.objects.all()
-        print(categories, 'hello')
         
         return render(request, 'add-item.html', {
             'categories': categories
