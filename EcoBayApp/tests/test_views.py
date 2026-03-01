@@ -66,5 +66,14 @@ class MyLoginViewsTest(TestCase):
         response = self.client.get(reverse('login_view'))
         self.assertTemplateUsed(response, 'login.html')
     
+    def test_login_works(self):
+
+        User.objects.create_user(
+            username='test_user',
+            email='123@mail.com',
+            password='123qwer'
+        )
     
-        
+        self.client.login(username='test_user', password='123qwer')
+        response = self.client.get('/add-item/')
+        self.assertEqual(response.status_code, 200)
