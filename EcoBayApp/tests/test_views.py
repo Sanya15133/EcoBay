@@ -19,6 +19,12 @@ class MyHomeViewsTests(TestCase):
         response = self.client.get('/search/', {'query': 'laptop'})
         self.assertEqual(response.status_code, 200)
     
+    def test_search_item_not_found(self):
+        query = 'random_item'
+        response = self.client.get('/search/', {'search': query})
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response,  f'No results found for {query}')
+    
 
 class MyRegisterViewsTests(TestCase):
     
