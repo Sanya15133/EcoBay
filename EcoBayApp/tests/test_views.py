@@ -78,7 +78,7 @@ class MyLoginViewsTest(TestCase):
         response = self.client.get('/add-item/')
         self.assertEqual(response.status_code, 200)
 
-    def test_incorrect_login_details(self):
+    def test_incorrect_login_details_return_error(self):
 
         response = self.client.post(reverse('login_view'), {
             'username': 'non_user',
@@ -86,3 +86,17 @@ class MyLoginViewsTest(TestCase):
         })
 
         self.assertContains(response, "Invalid username and/or password.")
+
+    def test_logout_view(self):
+
+        User.objects.create_user(
+            username='test_user',
+            email='123@mail.com',
+            password='123qwer'
+        )
+
+        self.client.login(username='test_user', password='123qwer')
+        self.client.logout()
+        response = self.client.get(reverse('home'))
+        self.assertEqual(response.status_code, 200)
+
