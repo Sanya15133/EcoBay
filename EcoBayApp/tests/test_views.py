@@ -1,5 +1,8 @@
 from django.test import TestCase
 from django.urls import reverse
+from django.contrib.auth import get_user_model
+User = get_user_model()
+
 
 class MyHomeViewsTests(TestCase):
 
@@ -24,11 +27,29 @@ class MyRegisterViewsTests(TestCase):
         self.assertTemplateUsed(response, 'register.html')
     
     def test_user_posts(self):
-        response = self.client.post('/register/', {'username': 'sanya', 'email': '123@mail.com', 'password': '123qwer', 'confirm_password': '123qwer'})
-        self.assertEqual(response.status_code, 200)
-    
+        response = self.client.post('/register/', {
+            'username': 'sanya',
+            'email': '123@mail.com',
+            'password': '123qwer',
+            'confirm_password': '123qwer'
+        })
+        self.assertEqual(response.status_code, 302)
+
     def test_user_exists(self):
-        response = self.client.post('/register/', {'username': 'Sanya', 'email': '123@mail.com', 'password': '123qwer', 'confirm_password': '123qwer'})
+
+        User.objects.create_user(
+            username='Sanya',
+            email='123@mail.com',
+            password='123qwer'
+        )
+
+        response = self.client.post('/register/', {
+            'username': 'Sanya',
+            'email': '123@mail.com',
+            'password': '123qwer',
+            'confirm_password': '123qwer'
+        })
+
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "User already exists")
     
