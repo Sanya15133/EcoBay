@@ -2,6 +2,7 @@ from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth import get_user_model
 User = get_user_model()
+from EcoBayApp.models import Item, Skill, Category
 
 
 class MyHomeViewsTests(TestCase):
@@ -107,3 +108,35 @@ class MyItemViewsTest(TestCase):
         response = self.client.get('/')
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'items')
+    
+    def test_add_item(self):
+
+        self.user = User.objects.create_user(
+            username='test_user',
+            password='123qwer'
+        )
+
+        self.category = Category.objects.create(
+            name='Electronics'
+        )
+
+        self.client.login(username='test_user', password='123qwer')
+
+        Item.objects.create(
+            name='remote',
+            description='used remote, needs batteries',
+            amount='5',
+            image_url='https://c8.alamy.com/comp/E91P3W/smashed-remote-control-E91P3W.jpg',
+            category=self.category,
+            user=self.user
+        )
+
+        response = self.client.post('/add-item/', {
+            'name':'remote',
+            'description': 'used remote, needs batteries',
+            'amount': '5',
+            'image_url': 'https://c8.alamy.com/comp/E91P3W/smashed-remote-control-E91P3W.jpg',
+            'category': self.category.id        
+        })
+
+        self.assertEqual(response.status_code, 200)
