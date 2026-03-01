@@ -77,3 +77,12 @@ class MyLoginViewsTest(TestCase):
         self.client.login(username='test_user', password='123qwer')
         response = self.client.get('/add-item/')
         self.assertEqual(response.status_code, 200)
+
+    def test_incorrect_login_details(self):
+
+        response = self.client.post(reverse('login_view'), {
+            'username': 'non_user',
+            'password': '123qwer'
+        })
+
+        self.assertContains(response, "Invalid username and/or password.")
