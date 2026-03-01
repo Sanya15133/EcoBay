@@ -121,8 +121,8 @@ def list_items_by_category(request):
     error = None
 
     if request.method == 'GET':
-        category = request.form.get('category')
-        items = Item.objects.filter(category)
+        category = request.GET.get('category')
+        items = Item.objects.filter(category=category)
 
         if items is None:
             error = 'This category has no current items'
@@ -141,6 +141,7 @@ def add_item(request):
 
     error = None
     user = request.user
+    
     if request.method == 'GET':
         categories = Category.objects.all()
         return render(request, 'add-item.html', {

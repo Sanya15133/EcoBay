@@ -100,3 +100,10 @@ class MyLoginViewsTest(TestCase):
         response = self.client.get(reverse('home'))
         self.assertEqual(response.status_code, 200)
 
+
+class MyItemViewsTest(TestCase):
+
+    def test_get_items(self):
+        response = self.client.get('/')
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'items')
