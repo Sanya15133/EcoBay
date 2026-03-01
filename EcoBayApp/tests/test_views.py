@@ -60,3 +60,11 @@ class MyRegisterViewsTests(TestCase):
         self.assertContains(response, "User already exists")
     
 
+class MyLoginViewsTest(TestCase):
+
+    def test_login_template_renders(self):
+        response = self.client.get(reverse('login_view'))
+        self.assertTemplateUsed(response, 'login.html')
+    
+    
+        
