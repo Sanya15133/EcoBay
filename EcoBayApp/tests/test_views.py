@@ -7,7 +7,6 @@ from EcoBayApp.models import Item, Skill, Category
 class LoadFixtures(TestCase):
     fixtures = ['categories.json', 'items.json']
 
-
 class MyHomeViewsTests(TestCase):
 
     def test_homepage(self):
@@ -174,3 +173,73 @@ class MyItemViewsTest(TestCase):
         })
 
         self.assertEqual(response.status_code, 200)
+
+
+class MySkillViewsTest(TestCase):
+
+    def test_get_skills(self):
+        response = self.client.get('/')
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'skills')
+    
+    def test_get_skill_by_id(self):
+        
+        user = User.objects.create_user(
+        username='test_user',
+        password='123qwer'
+    )
+
+        category = Category.objects.create(
+        name='Baking'
+    )
+
+        skill = Skill.objects.create(
+            name='baking cake',
+            description='needs to look disney themed',
+            amount='5',
+            category=category,
+            user=user
+    )
+
+        self.client.login(username='test_user', password='123qwer')
+        response = self.client.get(f'/skill/{skill.id}/')
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'baking cake')
+    
+    def test_incorrect_id(self):
+
+        response = self.client.get(f'/skill/7890/')
+        self.assertEqual(response.status_code, 404)
+
+
+    def test_add_skill(self):
+
+        self.user = User.objects.create_user(
+        username='test_user',
+        password='123qwer'
+    )
+
+        self.category = Category.objects.create(
+        name='Baking'
+    )
+
+        self.client.login(username='test_user', password='123qwer')
+
+        skill = Skill.objects.create(
+            name='baking cake',
+            description='needs to look disney themed',
+            amount='5',
+            category=self.category,
+            user=self.user
+    )
+
+        response = self.client.post('/add-skill/', {
+            'name': 'baking cake',
+            'description': 'needs to look disney themed',
+            'amount': '5',
+            'category': self.category.id        
+        }, follow=True)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertRedirects(response, '/') 
+        self.assertContains(response, 'baking cake')

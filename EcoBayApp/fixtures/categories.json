@@ -19,5 +19,12 @@
     "fields": {
       "name": "Clothing"
     }
+  },
+  {
+    "model": "EcoBayApp.category",
+    "pk": 4,
+    "fields": {
+      "name": "Baking"
+    }
   }
 ]
