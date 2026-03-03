@@ -153,9 +153,16 @@ class MyItemViewsTest(TestCase):
             name='Electronics'
         )
 
+        Item.objects.create(
+            name='remote',
+            description='used remote, needs batteries',
+            amount='5',
+            image_url='https://c8.alamy.com/comp/E91P3W/smashed-remote-control-E91P3W.jpg',
+            category=self.category,
+            user=self.user
+        )
+
         self.client.login(username='test_user', password='123qwer')
-
-
         response = self.client.post('/add-item/', {
             'name':'remote',
             'description': 'used remote, needs batteries',
@@ -166,6 +173,40 @@ class MyItemViewsTest(TestCase):
 
         self.assertEqual(response.status_code, 200)
 
+    def test_delete_item_by_id(self):
+
+        self.user = User.objects.create_user(
+            username='test_user',
+            password='123qwer'
+        )
+
+        self.category = Category.objects.create(
+            name='Electronics'
+        )
+
+        Item.objects.create(
+            name='remote',
+            description='used remote, needs batteries',
+            amount='5',
+            image_url='https://c8.alamy.com/comp/E91P3W/smashed-remote-control-E91P3W.jpg',
+            category=self.category,
+            user=self.user
+        )
+
+        self.client.login(username='test_user', password='123qwer')
+        response = self.client.post('/add-item/', {
+            'name':'remote',
+            'description': 'used remote, needs batteries',
+            'amount': '5',
+            'image_url': 'https://c8.alamy.com/comp/E91P3W/smashed-remote-control-E91P3W.jpg',
+            'category': self.category.id        
+        })
+
+        self.assertEqual(response.status_code, 200)
+        item = Item.objects.get(id=1)
+        self.client.delete(f'/item/delete/{item.id}')
+        response_get = self.client.get(f'/item/{item.id}/')
+        self.assertEqual(response_get.status_code, 404)
 
 class MySkillViewsTest(TestCase):
 
@@ -217,6 +258,13 @@ class MySkillViewsTest(TestCase):
 
         self.client.login(username='test_user', password='123qwer')
 
+        skill = Skill.objects.create(
+            name='baking cake',
+            description='needs to look disney themed',
+            amount='5',
+            category=self.category,
+            user=self.user
+    )
 
         response = self.client.post('/add-skill/', {
             'name': 'baking cake',
