@@ -136,6 +136,12 @@ class MyItemViewsTest(TestCase):
         response = self.client.get(f'/item/{item.id}/')
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'remote')
+    
+    def test_incorrect_id(self):
+
+        response = self.client.get(f'/item/7890/')
+        self.assertEqual(response.status_code, 404)
+
 
     def test_add_item(self):
 
