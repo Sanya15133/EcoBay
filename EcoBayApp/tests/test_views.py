@@ -4,6 +4,9 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 from EcoBayApp.models import Item, Skill, Category
 
+class LoadFixtures(TestCase):
+    fixtures = ['categories.json', 'items.json']
+
 
 class MyHomeViewsTests(TestCase):
 
@@ -109,6 +112,31 @@ class MyItemViewsTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'items')
     
+    def test_get_item_by_id(self):
+        
+        user = User.objects.create_user(
+        username='test_user',
+        password='123qwer'
+    )
+
+        category = Category.objects.create(
+        name='Electronics'
+    )
+
+        item = Item.objects.create(
+            name='remote',
+            description='used remote, needs batteries',
+            amount='5',
+            image_url='https://c8.alamy.com/comp/E91P3W/smashed-remote-control-E91P3W.jpg',
+            category=category,
+            user=user
+    )
+
+        self.client.login(username='test_user', password='123qwer')
+        response = self.client.get(f'/item/{item.id}/')
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, 'remote')
+
     def test_add_item(self):
 
         self.user = User.objects.create_user(
