@@ -155,14 +155,6 @@ class MyItemViewsTest(TestCase):
 
         self.client.login(username='test_user', password='123qwer')
 
-        Item.objects.create(
-            name='remote',
-            description='used remote, needs batteries',
-            amount='5',
-            image_url='https://c8.alamy.com/comp/E91P3W/smashed-remote-control-E91P3W.jpg',
-            category=self.category,
-            user=self.user
-        )
 
         response = self.client.post('/add-item/', {
             'name':'remote',
@@ -225,13 +217,6 @@ class MySkillViewsTest(TestCase):
 
         self.client.login(username='test_user', password='123qwer')
 
-        skill = Skill.objects.create(
-            name='baking cake',
-            description='needs to look disney themed',
-            amount='5',
-            category=self.category,
-            user=self.user
-    )
 
         response = self.client.post('/add-skill/', {
             'name': 'baking cake',
