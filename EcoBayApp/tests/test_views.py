@@ -276,3 +276,37 @@ class MySkillViewsTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertRedirects(response, '/') 
         self.assertContains(response, 'baking cake')
+    
+
+    def test_delete_skill_by_id(self):
+
+        self.user = User.objects.create_user(
+            username='test_user',
+            password='123qwer'
+        )
+
+        self.category = Category.objects.create(
+            name='Electronics'
+        )
+
+        Skill.objects.create(
+            name='weed garden',
+            description='6ft long weeds',
+            amount='50',
+            category=self.category,
+            user=self.user
+        )
+
+        self.client.login(username='test_user', password='123qwer')
+        response = self.client.post('/add-skill/', {
+            'name':'weed garden',
+            'description': '6ft long weeds',
+            'amount': '50',
+            'category': self.category.id        
+        })
+
+        self.assertEqual(response.status_code, 302)
+        skill = Skill.objects.get(id=1)
+        self.client.delete(f'/skill/delete/{skill.id}')
+        response_get = self.client.get(f'/skill/{skill.id}/')
+        self.assertEqual(response_get.status_code, 404)
