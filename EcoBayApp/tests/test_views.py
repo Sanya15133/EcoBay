@@ -310,3 +310,49 @@ class MySkillViewsTest(TestCase):
         self.client.delete(f'/skill/delete/{skill.id}')
         response_get = self.client.get(f'/skill/{skill.id}/')
         self.assertEqual(response_get.status_code, 404)
+    
+
+    def test_request_skill(self):
+
+        response = self.client.get(reverse("request_skill"))
+        self.assertTemplateUsed(response, "skills-request.html")
+    
+    def test_post_missing_fields_returns_error(self):
+        
+        data = {
+            'name': 'plastering',
+            'date': '2026-03-10'
+        }
+
+        response = self.client.post('/skills-request/', data)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'skills-request.html')
+        self.assertContains(response, 'All fields required')
+
+    def test_post_all_fields_creates_skill_and_redirects(self):
+
+        self.user = User.objects.create_user(
+            username='test_user',
+            password='123qwer'
+        )
+
+        self.category = Category.objects.create(
+            name='Electronics'
+        )
+
+        self.client.login(username='test_user', password='123qwer')
+
+
+        data = {
+            'name': 'weed garden',
+            'description': '6ft long weeds',
+            'amount': '50',
+            'category': self.category.id,
+        }
+        
+
+        response = self.client.post('/skills-request/', data)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'index.html')
+        skill = Skill.objects.get(id=1)
+        self.assertEqual(skill.description, '6ft long weeds')

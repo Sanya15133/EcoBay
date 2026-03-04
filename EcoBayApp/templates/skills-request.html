@@ -9,8 +9,16 @@
      <form method="post" action="{% url 'request_skill'  %}" >
         <label for="name">Skill</label><input name="name">
         <label for="description">Description</label><input name="description">
-        <label for="date">Date</label><input name="date">
-        <label for="completed">Is Complete</label><input name="completed">
+        <label for="amount">Amount</label><input name="amount">
+        <p>
+        <label for="category">Category</label>
+        <select name="category" type="text">
+        <option value="">Select Category</option>
+        {% for category in categories %}
+        <option value="{{ category.id }}">{{ category.name }}</option>
+        {% endfor %}
+        </select>
+        </p>
         <button type="submit">Submit Request</button>
      </form>
     </div>

@@ -216,23 +216,25 @@ def add_skill(request):
 def request_skill(request):
 
     error = None
+    user = request.user
 
     if request.method == 'POST':
         name = request.POST.get('name')
         description = request.POST.get('description')
-        date_needed_by = request.POST.get('date')
-        is_complete = request.POST.get('is-complete')
+        amount = request.POST.get('amount')
+        category_id = request.POST.get('category')
 
-        if not all({ name, description, date_needed_by, is_complete}):
+        if not all({ name, description, amount, category_id, user}):
             error = 'All fields required'
             return render(request, 'skills-request.html', {
                 'error': error
             })
-        else:
-            Skill.objects.create(name=name, description=description, date_needed_by=date_needed_by, is_complete=is_complete)
-            return render(request, 'index.html')
-    else:
-        return render(request, 'skills-request.html')
+        
+        category = Category.objects.get(id=category_id)
+        Skill.objects.create(name=name, description=description, amount=amount, category=category, user=user)
+        return render(request, 'index.html')
+    
+    return render(request, 'skills-request.html')
     
 def make_offer(request, id):
     
