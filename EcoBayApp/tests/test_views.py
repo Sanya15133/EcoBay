@@ -1,6 +1,7 @@
 from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth import get_user_model
+from decimal import Decimal
 User = get_user_model()
 from EcoBayApp.models import Item, Skill, Category
 
@@ -207,6 +208,33 @@ class MyItemViewsTest(TestCase):
         self.client.delete(f'/item/delete/{item.id}')
         response_get = self.client.get(f'/item/{item.id}/')
         self.assertEqual(response_get.status_code, 404)
+    
+    def test_make_offer(self):
+
+        self.user = User.objects.create_user(
+            username='test_user',
+            password='123qwer'
+        )
+
+        self.category = Category.objects.create(
+            name='Electronics'
+        )
+
+        self.client.login(username='test_user', password='123qwer')
+        
+        item = Item.objects.create(
+            name="Laptop",
+            description='Battery dies quickly, otherwise all good',
+            amount=100,
+            category=self.category,
+            user=self.user 
+        )
+
+        data = {'bid-amount': 150}
+        response = self.client.post('/item/make_offer/1', data, follow=True)
+        item.refresh_from_db()
+        self.assertContains(response, "Laptop")
+        self.assertEqual(item.amount, Decimal('150'))
 
 class MySkillViewsTest(TestCase):
 
@@ -317,7 +345,7 @@ class MySkillViewsTest(TestCase):
         response = self.client.get(reverse("request_skill"))
         self.assertTemplateUsed(response, "skills-request.html")
     
-    def test_post_missing_fields_returns_error(self):
+    def test_post_missing_data_returns_error(self):
         
         data = {
             'name': 'plastering',
@@ -329,7 +357,7 @@ class MySkillViewsTest(TestCase):
         self.assertTemplateUsed(response, 'skills-request.html')
         self.assertContains(response, 'All fields required')
 
-    def test_post_all_fields_creates_skill_and_redirects(self):
+    def test_post_all_fields_works(self):
 
         self.user = User.objects.create_user(
             username='test_user',
@@ -356,3 +384,4 @@ class MySkillViewsTest(TestCase):
         self.assertTemplateUsed(response, 'index.html')
         skill = Skill.objects.get(id=1)
         self.assertEqual(skill.description, '6ft long weeds')
+

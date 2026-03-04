@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import logout, authenticate, login
 from .models import Item, Skill, User, Category
+from decimal import Decimal
+
 
 
 def home(request):
@@ -247,14 +249,14 @@ def make_offer(request, id):
         if not bid_amount:
             error = 'Please enter a bid'
         else:
-            bid_amount = int(bid_amount)
+            bid_amount = Decimal(bid_amount)
 
             if bid_amount <= item.amount:
                 error = 'Your bid must be higher than the current bid'
             else:
                 item.amount = bid_amount
                 item.save()
-                return redirect('item', id=item.id)
+                return redirect('get_item', id=item.id)
 
     return render(request, 'item.html', {
         'item': item,
