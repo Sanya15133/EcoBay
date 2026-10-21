@@ -1,35 +1,287 @@
 {% extends 'layout.html' %}
 
+{% block title %}EcoBay | Browse Listings{% endblock %}
+
 {% block content %}
-<h2>View Listings</h2>
 
-{% if error %}
-<p style="color: red;">{{ error }}</p>
-{% endif %}
+<div class="ecobay-listings">
 
-<div class="main-div">
-    <h3>Current skills</h3>
-    {% if skills %}
-        {% for skill in skills %}
-            <div class="skill-div">
-            <a href="{% url 'get_skill' skill.id %}">
-            {{ skill.name }}
-            </a>
+    <!-- Welcome Section -->
+    <section class="welcome-section">
+        <div class="welcome-content">
+            <span class="welcome-label">
+                <i class="fa fa-leaf"></i> SUSTAINABLE LIVING, TOGETHER
+            </span>
+
+            <h1>Discover something <span>valuable.</span></h1>
+
+            <p>
+                Share skills, discover useful items, and connect with your
+                community. Small exchanges can make a big difference.
+            </p>
+
+            <div class="welcome-buttons">
+                <a href="#skills-section" class="primary-button">
+                    Explore Skills <i class="fa fa-arrow-down"></i>
+                </a>
+
+                <a href="#items-section" class="secondary-button">
+                    Browse Items
+                </a>
             </div>
-        {% endfor %}
-    {% endif %}
-</div>
-
-<div class="main-div">
-    <h3>Current Items</h3>
-    {% if items %}
-        {% for item in items %}
-        <div class="item-div">
-        <a href="{% url 'get_item' item.id %}">
-        {{ item.name }}
-        </a>
         </div>
-        {% endfor %}
+
+        <div class="welcome-decoration">
+            <div class="decoration-circle">
+                <i class="fa fa-leaf"></i>
+            </div>
+            <span class="decoration-dot dot-one"></span>
+            <span class="decoration-dot dot-two"></span>
+            <span class="decoration-dot dot-three"></span>
+        </div>
+    </section>
+
+
+    <!-- Error Message -->
+    {% if error %}
+        <div class="listing-error">
+            <i class="fa fa-exclamation-circle"></i>
+            {{ error }}
+        </div>
     {% endif %}
+
+
+    <!-- Overview -->
+    <section class="overview-section">
+
+        <div class="overview-card">
+            <div class="overview-icon skills-overview-icon">
+                <i class="fa fa-lightbulb-o"></i>
+            </div>
+
+            <div>
+                <p>Available Skills</p>
+                <h3>{{ skills|length }}</h3>
+            </div>
+        </div>
+
+        <div class="overview-card">
+            <div class="overview-icon items-overview-icon">
+                <i class="fa fa-cubes"></i>
+            </div>
+
+            <div>
+                <p>Available Items</p>
+                <h3>{{ items|length }}</h3>
+            </div>
+        </div>
+
+    </section>
+
+
+    <!-- Skills Section -->
+    <section class="market-section" id="skills-section">
+
+        <div class="market-heading">
+            <div class="market-heading-left">
+                <div class="heading-icon skills-heading-icon">
+                    <i class="fa fa-lightbulb-o"></i>
+                </div>
+
+                <div>
+                    <h2>Explore Skills</h2>
+                    <p>Discover what people in your community can offer.</p>
+                </div>
+            </div>
+
+            <span class="section-count">
+                {{ skills|length }} available
+            </span>
+        </div>
+
+
+        {% if skills %}
+
+            <div class="listing-grid">
+
+                {% for skill in skills %}
+
+                    <a href="{% url 'get_skill' skill.id %}"
+                       class="listing-card skill-card">
+
+                        <div class="listing-card-top">
+                            <div class="listing-card-icon skill-card-icon">
+                                <i class="fa fa-lightbulb-o"></i>
+                            </div>
+
+                            <span class="listing-tag skill-tag">
+                                SKILL
+                            </span>
+                        </div>
+
+                        <h3>{{ skill.name }}</h3>
+
+                        <p class="listing-description">
+                            Discover this skill and learn more about what's available.
+                        </p>
+
+                        <div class="listing-card-footer">
+                            <span>Explore skill</span>
+                            <span class="listing-arrow">
+                                <i class="fa fa-arrow-right"></i>
+                            </span>
+                        </div>
+
+                    </a>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="empty-state">
+                <div class="empty-state-icon">
+                    <i class="fa fa-lightbulb-o"></i>
+                </div>
+
+                <h3>No skills listed yet</h3>
+
+                <p>
+                    Be the first to share a skill with your community!
+                </p>
+
+                {% if user.is_authenticated %}
+                    <a href="{% url 'add_skill' %}" class="empty-state-button">
+                        <i class="fa fa-plus"></i> Add a Skill
+                    </a>
+                {% else %}
+                    <a href="{% url 'register' %}" class="empty-state-button">
+                        Join EcoBay
+                    </a>
+                {% endif %}
+            </div>
+
+        {% endif %}
+
+    </section>
+
+
+    <!-- Items Section -->
+    <section class="market-section" id="items-section">
+
+        <div class="market-heading">
+            <div class="market-heading-left">
+                <div class="heading-icon items-heading-icon">
+                    <i class="fa fa-cubes"></i>
+                </div>
+
+                <div>
+                    <h2>Discover Items</h2>
+                    <p>Find useful items shared by your community.</p>
+                </div>
+            </div>
+
+            <span class="section-count">
+                {{ items|length }} available
+            </span>
+        </div>
+
+
+        {% if items %}
+
+            <div class="listing-grid">
+
+                {% for item in items %}
+
+                    <a href="{% url 'get_item' item.id %}"
+                       class="listing-card item-card">
+
+                        <div class="listing-card-top">
+                            <div class="listing-card-icon item-card-icon">
+                                <i class="fa fa-cube"></i>
+                            </div>
+
+                            <span class="listing-tag item-tag">
+                                ITEM
+                            </span>
+                        </div>
+
+                        <h3>{{ item.name }}</h3>
+
+                        <p class="listing-description">
+                            Take a closer look at this item and find out more.
+                        </p>
+
+                        <div class="listing-card-footer">
+                            <span>View item</span>
+                            <span class="listing-arrow">
+                                <i class="fa fa-arrow-right"></i>
+                            </span>
+                        </div>
+
+                    </a>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="empty-state">
+                <div class="empty-state-icon items-empty-icon">
+                    <i class="fa fa-cube"></i>
+                </div>
+
+                <h3>No items listed yet</h3>
+
+                <p>
+                    Have something useful to share? Add it to EcoBay!
+                </p>
+
+                {% if user.is_authenticated %}
+                    <a href="{% url 'add_item' %}" class="empty-state-button">
+                        <i class="fa fa-plus"></i> Add an Item
+                    </a>
+                {% else %}
+                    <a href="{% url 'register' %}" class="empty-state-button">
+                        Join EcoBay
+                    </a>
+                {% endif %}
+            </div>
+
+        {% endif %}
+
+    </section>
+
+
+    <!-- Bottom Banner -->
+    <section class="community-banner">
+
+        <div class="community-icon">
+            <i class="fa fa-globe"></i>
+        </div>
+
+        <div class="community-text">
+            <h2>Good things happen when we share.</h2>
+            <p>
+                Join a community that values useful items, shared skills,
+                and a more sustainable future.
+            </p>
+        </div>
+
+        {% if user.is_authenticated %}
+            <a href="{% url 'add_item' %}" class="community-button">
+                Share Something <i class="fa fa-arrow-right"></i>
+            </a>
+        {% else %}
+            <a href="{% url 'register' %}" class="community-button">
+                Join EcoBay <i class="fa fa-arrow-right"></i>
+            </a>
+        {% endif %}
+
+        {% endblock %}
+
+    </section>
+
 </div>
-{% endblock %}

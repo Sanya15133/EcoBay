@@ -2,43 +2,155 @@
 
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>EcoBay</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}EcoBay | Sustainable Community Marketplace{% endblock %}</title>
+
     <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
-    <link rel="stylesheet" href="{% static 'styles.css' %}" />
-  </head>
-  <body>
-    <div class="title-div">
-      <a href="{% url 'home' %}" class="nav-brand">EcoBay🌕</a>
-    </div>
-    <div class="bottom-navbar">
-      <div class="nav-container">
-        <ul class="nav-links">
-      {% if not user.is_authenticated %}
-      <li><a href="{% url 'register' %}">Register</a></li>
-      <li><a href="{% url 'login_view' %}">Sign In</a></li>
-      {% endif %}
-      {% if user.is_authenticated %}
-        <li><a href="{% url 'logout_view' %}">Sign Out</a></li>
-        <li><a href="{% url 'request_skill' %}">Make Request</a></li>
-        <li><a href="{% url 'add_item' %}">Add Item</a></li>
-        <li><a href="{% url 'add_skill' %}">Add Skill</a></li>
-      {% endif %}
-    </ul>
-        <form class="search-container" method="get" action="{% url 'search' %}">
-          <input placeholder="Search..." id="search" type="search" name="search"/>
-          <button type="submit">🔍</button>
-        </form>
-      </div>
-    </div>
-    <main>
-  {% block content %}
-  {% endblock %}
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    >
+
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+
+<body>
+
+    <!-- Top Header -->
+    <header class="site-header">
+        <div class="header-container">
+
+            <a href="{% url 'home' %}" class="nav-brand">
+                <span class="brand-icon">
+                    <i class="fa fa-leaf"></i>
+                </span>
+                <span>Eco<span class="brand-highlight">Bay</span></span>
+            </a>
+
+            <span class="brand-tagline">
+                Share more. Waste less.
+            </span>
+
+        </div>
+    </header>
+
+
+    <!-- Navigation Bar -->
+    <nav class="bottom-navbar">
+        <div class="nav-container">
+
+            <ul class="nav-links">
+
+                <li>
+                    <a href="{% url 'home' %}">
+                        <i class="fa fa-home"></i>
+                        Home
+                    </a>
+                </li>
+
+
+                {% if not user.is_authenticated %}
+
+                    <li>
+                        <a href="{% url 'register' %}">
+                            <i class="fa fa-user-plus"></i>
+                            Register
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{% url 'login_view' %}" class="nav-login">
+                            <i class="fa fa-sign-in"></i>
+                            Sign In
+                        </a>
+                    </li>
+
+                {% endif %}
+
+                {% if user.is_authenticated %}
+
+                    <li>
+                        <a href="{% url 'request_skill' %}">
+                            <i class="fa fa-handshake-o"></i>
+                            Make Request
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{% url 'add_item' %}">
+                            <i class="fa fa-plus-circle"></i>
+                            Add Item
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{% url 'add_skill' %}">
+                            <i class="fa fa-lightbulb-o"></i>
+                            Add Skill
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{% url 'logout_view' %}">
+                            <i class="fa fa-sign-out"></i>
+                            Sign Out
+                        </a>
+                    </li>
+
+                {% endif %}
+
+            </ul>
+
+
+            <!-- Search Bar -->
+            <form
+                class="search-container"
+                method="get"
+                action="{% url 'search' %}"
+                role="search"
+            >
+                <input
+                    placeholder="Search items and skills..."
+                    id="search"
+                    type="search"
+                    name="search"
+                    aria-label="Search items and skills"
+                    value="{{ request.GET.search|default:'' }}"
+                >
+
+                <button type="submit" aria-label="Search">
+                    <i class="fa fa-search"></i>
+                </button>
+            </form>
+
+        </div>
+    </nav>
+
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        {% block content %}
+        {% endblock %}
+
     </main>
-  </body>
+
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-container">
+
+            <p>
+                <i class="fa fa-leaf"></i>
+                EcoBay — Share more. Waste less.
+            </p>
+
+            <span>Building a more sustainable community.</span>
+
+        </div>
+    </footer>
+
+</body>
 </html>
