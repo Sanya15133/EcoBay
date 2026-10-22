@@ -1,25 +1,66 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-    <h2>Skill Request</h2>
-     {% if error %}
-    <p style="color: red;">{{ error }}</p>
-    {% endif %}
-    <div class="main-div">
-     <form method="post" action="{% url 'request_skill'  %}" >
-        <label for="name">Skill</label><input name="name">
-        <label for="description">Description</label><input name="description">
-        <label for="amount">Amount</label><input name="amount">
-        <p>
-        <label for="category">Category</label>
-        <select name="category" type="text">
-        <option value="">Select Category</option>
-        {% for category in categories %}
-        <option value="{{ category.id }}">{{ category.name }}</option>
-        {% endfor %}
-        </select>
+<div class="form-page">
+    <div class="main-div form-card">
+
+        <p class="event-eyebrow">NEIGHBOURHOOD WATCH</p>
+        <h2 class="form-title">Request a Skill</h2>
+        <p class="form-subtitle">
+            Ask your neighbours for help or request a skill
+            that would benefit your community.
         </p>
-        <button type="submit">Submit Request</button>
-     </form>
+
+        {% if error %}
+            <div class="form-errors">{{ error }}</div>
+        {% endif %}
+
+        <form method="post" action="{% url 'request_skill' %}">
+            {% csrf_token %}
+
+            <label for="name">Skill name</label>
+            <input
+                id="name"
+                name="name"
+                type="text"
+                placeholder="e.g. Gardening help"
+                required
+            >
+
+            <label for="description">Description</label>
+            <textarea
+                id="description"
+                name="description"
+                placeholder="Explain what help you need..."
+                required
+            ></textarea>
+
+            <label for="amount">Amount (£)</label>
+            <input
+                id="amount"
+                name="amount"
+                type="number"
+                min="0"
+                step="0.01"
+                placeholder="Enter your budget"
+                required
+            >
+
+            <label for="category">Category</label>
+            <select id="category" name="category" required>
+                <option value="">Select a category</option>
+                {% for category in categories %}
+                <option value="{{ category.id }}">
+                    {{ category.name }}
+                </option>
+                {% endfor %}
+            </select>
+
+            <button type="submit" class="form-submit-btn">
+                Submit request
+            </button>
+        </form>
+
     </div>
+</div>
 {% endblock %}

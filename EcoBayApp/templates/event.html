@@ -1,0 +1,78 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="event-page">
+
+    {% if error %}
+        <div class="event-error">{{ error }}</div>
+    {% endif %}
+
+   {% if event %}
+<div class="event-card">
+
+    <div class="event-content">
+        <p class="event-eyebrow"></p>
+        <h2 class="event-title">{{ event.name }}</h2>
+    </div>
+
+    <div class="event-image-container">
+        <img
+            src="{{ event.image_url }}"
+            alt="{{ event.name }}"
+            class="event-image"
+        >
+    </div>
+
+    <div class="event-content">
+        <p class="event-description">
+            {{ event.description }}
+        </p>
+
+            <div class="event-details">
+
+                <div class="event-detail">
+                    <span class="detail-icon">📅</span>
+                    <div>
+                        <span class="detail-label">Starts</span>
+                        <p>{{ event.start_date|date:"D, d M Y · H:i" }}</p>
+                    </div>
+                </div>
+
+                <div class="event-detail">
+                    <span class="detail-icon">👤</span>
+                    <div>
+                        <span class="detail-label">Organised by</span>
+                        <p>{{ event.user }}</p>
+                    </div>
+                </div>
+
+                <div class="event-detail">
+                    <span class="detail-icon">📝</span>
+                    <div>
+                        <span class="detail-label">Posted</span>
+                        <p>{{ event.created_at|date:"d M Y, H:i" }}</p>
+                    </div>
+                </div>
+
+            </div>
+
+            {% if user.is_authenticated and request.user == event.user %}
+            <div class="event-actions">
+                <form method="post"
+                      action="{% url 'delete_event' event.id %}"
+                      onsubmit="return confirm('Are you sure you want to delete this event?');">
+                    {% csrf_token %}
+                    <button type="submit" class="delete-event-btn">
+                        Delete event
+                    </button>
+                </form>
+            </div>
+            {% endif %}
+
+        </div>
+    </div>
+    {% endif %}
+
+</div>
+{% endblock %}
+

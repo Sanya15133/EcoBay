@@ -76,6 +76,29 @@
             </div>
         </div>
 
+        <div class="overview-card">
+            <div class="overview-icon skills-overview-icon">
+                <i class="fa fa-lightbulb-o"></i>
+            </div>
+
+            <div>
+                <p>Upcoming Events</p>
+                <h3>{{ events|length }}</h3>
+            </div>
+        </div>
+
+           <div class="overview-card">
+            <div class="overview-icon items-overview-icon">
+                <i class="fa fa-cubes"></i>
+            </div>
+
+            <div>
+                <p>Current Notices</p>
+                <h3>{{ notices|length }}</h3>
+            </div>
+        </div>
+
+
     </section>
 
 
@@ -242,6 +265,180 @@
                 {% if user.is_authenticated %}
                     <a href="{% url 'add_item' %}" class="empty-state-button">
                         <i class="fa fa-plus"></i> Add an Item
+                    </a>
+                {% else %}
+                    <a href="{% url 'register' %}" class="empty-state-button">
+                        Join EcoBay
+                    </a>
+                {% endif %}
+            </div>
+
+        {% endif %}
+
+    </section>
+
+     <!-- Events Section -->
+    <section class="market-section" id="events-section">
+
+        <div class="market-heading">
+            <div class="market-heading-left">
+                <div class="heading-icon items-heading-icon">
+                    <i class="fa fa-cubes"></i>
+                </div>
+
+                <div>
+                    <h2>Upcoming Events</h2>
+                    <p>Find engaging events shared by your community.</p>
+                </div>
+            </div>
+
+            <span class="section-count">
+                {{ events|length }} available
+            </span>
+        </div>
+
+
+        {% if events %}
+
+            <div class="listing-grid">
+
+                {% for event in events %}
+
+                    <a href="{% url 'get_event' event.id %}"
+                       class="listing-card item-card">
+
+                        <div class="listing-card-top">
+                            <div class="listing-card-icon item-card-icon">
+
+                                <i class="fa fa-cube"></i>
+                            </div>
+
+                            <span class="listing-tag item-tag">
+                                EVENT
+                            </span>
+                        </div>
+
+                        <h3>{{ event.name }}</h3>
+
+                        <p class="listing-description">
+                            Take a closer look at this event and find out more.
+                        </p>
+
+                        <div class="listing-card-footer">
+                            <span>View Event</span>
+                            <span class="listing-arrow">
+                                <i class="fa fa-arrow-right"></i>
+                            </span>
+                        </div>
+
+                    </a>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="empty-state">
+                <div class="empty-state-icon items-empty-icon">
+                    <i class="fa fa-cube"></i>
+                </div>
+
+                <h3>No events listed yet</h3>
+
+                <p>
+                    Have something useful to share? Add it to EcoBay!
+                </p>
+
+                {% if user.is_authenticated %}
+                    <a href="{% url 'add_event' %}" class="empty-state-button">
+                        <i class="fa fa-plus"></i> Add an Event
+                    </a>
+                {% else %}
+                    <a href="{% url 'register' %}" class="empty-state-button">
+                        Join EcoBay
+                    </a>
+                {% endif %}
+            </div>
+
+        {% endif %}
+
+    </section>
+
+    <section class="market-section" id="notices-section">
+
+        <div class="market-heading">
+            <div class="market-heading-left">
+                <div class="heading-icon skills-heading-icon">
+                    <i class="fa fa-lightbulb-o"></i>
+                </div>
+
+                <div>
+                    <h2>Current Notices</h2>
+                    <p>Be aware of what's going on in your community.</p>
+                </div>
+            </div>
+
+            <span class="section-count">
+                {{ notices|length }} available
+            </span>
+        </div>
+
+
+        {% if notices %}
+
+            <div class="listing-grid">
+
+                {% for notice in notices %}
+
+                    <a href="{% url 'get_notice' notice.id %}"
+                       class="listing-card skill-card">
+
+                        <div class="listing-card-top">
+                            <div class="listing-card-icon skill-card-icon">
+                                <i class="fa fa-lightbulb-o"></i>
+                            </div>
+
+                            <span class="listing-tag skill-tag">
+                                NOTICE
+                            </span>
+                        </div>
+
+                        <h3>{{ notice.name }}</h3>
+
+                        <p class="listing-description">
+                            Read this notice and learn more about what's going on.
+                        </p>
+
+                        <div class="listing-card-footer">
+                            <span>Explore notice</span>
+                            <span class="listing-arrow">
+                                <i class="fa fa-arrow-right"></i>
+                            </span>
+                        </div>
+
+                    </a>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="empty-state">
+                <div class="empty-state-icon">
+                    <i class="fa fa-lightbulb-o"></i>
+                </div>
+
+                <h3>No notices listed yet</h3>
+
+                <p>
+                    Be the first to share a notice with your community!
+                </p>
+
+                {% if user.is_authenticated %}
+                    <a href="{% url 'add_notice' %}" class="empty-state-button">
+                        <i class="fa fa-plus"></i> Add a Notice
                     </a>
                 {% else %}
                     <a href="{% url 'register' %}" class="empty-state-button">

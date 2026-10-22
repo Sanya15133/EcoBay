@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponseForbidden
 from django.contrib.auth import logout, authenticate, login
-from .models import Item, Skill, User, Category
+from .models import Item, Skill, User, Category, Event, Notice
 from decimal import Decimal
 
 
@@ -10,6 +10,9 @@ def home(request):
 
     skills = Skill.objects.all()
     items = Item.objects.all()
+    events = Event.objects.all()
+    notices = Notice.objects.all()
+
 
     error = None
     if not skills.exists() and not items.exists():
@@ -18,6 +21,8 @@ def home(request):
     return render(request, 'index.html', {
         'skills': skills,
         'items': items,
+        'events': events,
+        'notices': notices,
         'error': error,
     })
 
@@ -170,11 +175,78 @@ def add_item(request):
     else:
         return render(request, "add-item.html")
 
+def add_event(request):
+
+    error = None
+    user = request.user
+
+    if request.method == "GET":
+        events = Event.objects.all()
+        return render(request, 'add-event.html', {
+            "events": events
+        })
+    
+    if request.method == "POST":
+        name = request.POST.get('name')
+        description = request.POST.get('description')
+        start_date = request.POST.get('start-date')
+        image_url = request.POST.get('image')
+
+
+        if not all([name, description, start_date, image_url]):
+            error = "All fields are required"
+            return render(request, 'add-event.html', {
+                'error': error
+            })
+        Event.objects.create(name=name, description=description, start_date=start_date, image_url=image_url, user=user)
+        return redirect('home')
+    else:
+        return render(request, 'add-event.html')
+
+def add_notice(request):
+
+    error = None
+    user = request.user
+
+    if request.method == "GET":
+        notices = Notice.objects.all()
+        return render(request, 'add-notice.html', {
+            'notices': notices
+        })
+    if request.method == "POST":
+        name = request.POST.get('name')
+        description = request.POST.get('description')
+        start_date = request.POST.get('start-date')
+
+        if not all([name, description, start_date]):
+            error = 'All fields required'
+            return render(request, 'add-notice.html', {
+                'error': error
+            })
+        Notice.objects.create(name=name, description=description, start_date=start_date, user=user)
+        return redirect('home')
+    else:
+        return render(request, 'add-notice.html')
+    
 def get_item(request, id):
 
     item = get_object_or_404(Item, id=id)
     return render(request, 'item.html', {
         'item': item
+    })
+
+def get_event(request, id):
+
+    event = get_object_or_404(Event, id=id)
+    return render(request, 'event.html', {
+        'event': event
+    })
+
+def get_notice(request, id):
+
+    notice = get_object_or_404(Notice, id=id)
+    return render(request, 'notice.html', {
+        'notice': notice
     })
 
 def get_skill(request, id):
@@ -263,25 +335,59 @@ def make_offer(request, id):
         'error': error,
     })
 
-    
+
 def delete_item(request, id):
-    
-    user = request.user
+
     item = get_object_or_404(Item, id=id)
 
-    if user == item.user:
-        item.delete()
-        return HttpResponseRedirect(request.path_info)
+    if request.method != "POST":
+        return HttpResponseForbidden("POST request required")
+
+    if request.user != item.user:
+        return HttpResponseForbidden("You cannot delete this item.")
+
+    item.delete()
+    return redirect("home")
 
 def delete_skill(request, id):
     
-    user = request.user
     skill = get_object_or_404(Skill, id=id)
 
-    if user == skill.user:
-        skill.delete()
-        return HttpResponseRedirect(request.path_info)
+    if request.method != "POST":
+        return HttpResponseForbidden("POST request required")
 
+    if request.user != skill.user:
+        return HttpResponseForbidden("You cannot delete this skill.")
+
+    skill.delete()
+    return redirect('home')
+
+
+def delete_event(request, id):
+
+    event = get_object_or_404(Event, id=id)
+
+    if request.method != "POST":
+        return HttpResponseForbidden("POST request required")
+
+    if request.user != event.user:
+        return HttpResponseForbidden("You cannot delete this event.")
+
+    event.delete()
+    return redirect("home")
+
+def delete_notice(request, id):
+
+    notice = get_object_or_404(Notice, id=id)
+
+    if request.method != "POST":
+        return HttpResponseForbidden("POST request required")
+
+    if request.user != notice.user:
+        return HttpResponseForbidden("You cannot delete this notice.")
+
+    notice.delete()
+    return redirect("home")
 
 
 

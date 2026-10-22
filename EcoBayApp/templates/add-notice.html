@@ -1,0 +1,48 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="form-page">
+    <div class="main-div form-card">
+
+        <p class="event-eyebrow">NEIGHBOURHOOD WATCH</p>
+        <h2 class="form-title">Add Notice</h2>
+        <p class="form-subtitle">
+            Share an important announcement with your local community.
+        </p>
+
+        <form method="post" action="{% url 'add_notice' %}">
+            {% csrf_token %}
+
+            <label for="name">Notice title</label>
+            <input
+                id="name"
+                name="name"
+                type="text"
+                placeholder="e.g. Road closure on High Street"
+                required
+            >
+
+            <label for="description">Description</label>
+            <textarea
+                id="description"
+                name="description"
+                placeholder="Provide details for your neighbours..."
+                required
+            ></textarea>
+
+            <label for="start-date">Start date</label>
+            <input
+                id="start-date"
+                name="start-date"
+                type="date"
+                required
+            >
+
+            <button type="submit" class="form-submit-btn">
+                Add notice
+            </button>
+        </form>
+
+    </div>
+</div>
+{% endblock %}

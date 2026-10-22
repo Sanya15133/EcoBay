@@ -1,0 +1,59 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="form-page">
+    <div class="main-div form-card">
+
+        <p class="event-eyebrow">NEIGHBOURHOOD WATCH</p>
+        <h2 class="form-title">Add Event</h2>
+        <p class="form-subtitle">
+            Share an event or activity with your local community.
+        </p>
+
+        <form method="post" action="{% url 'add_event' %}">
+            {% csrf_token %}
+
+            <label for="name">Event name</label>
+            <input
+                id="name"
+                name="name"
+                type="text"
+                maxlength="20"
+                placeholder="e.g. Community Safety Meeting"
+                required
+            >
+
+            <label for="description">Description</label>
+            <textarea
+                id="description"
+                name="description"
+                maxlength="200"
+                placeholder="Tell your neighbours about the event..."
+                required
+            ></textarea>
+
+            <label for="start-date">Start date</label>
+            <input
+                id="start-date"
+                name="start-date"
+                type="date"
+                required
+            >
+
+            <label for="image">Image link</label>
+            <input
+                id="image"
+                name="image"
+                type="url"
+                placeholder="https://example.com/image.jpg"
+                required
+            >
+
+            <button type="submit" class="form-submit-btn">
+                Add event
+            </button>
+        </form>
+
+    </div>
+</div>
+{% endblock %}
