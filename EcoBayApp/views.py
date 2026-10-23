@@ -103,7 +103,6 @@ def login_view(request):
             password=password
         )
 
-
         if user is not None:
             login(request, user)
             return redirect('home')
