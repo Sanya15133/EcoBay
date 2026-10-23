@@ -1,4 +1,4 @@
-from EcoBayApp.models import User, Category, Item, Skill, Offer
+from EcoBayApp.models import User, Category, Item, Skill, Offer, Notice, Event
 from django.test import TestCase
 from model_bakery import baker
 
@@ -58,4 +58,27 @@ class OfferTestModel(TestCase):
     
     def test_offer_in_db(self):
         offers = Offer.objects.all()
+        assert len(offers) != 0
+
+
+class NoticeTestModel(TestCase):
+    def setUp(self):
+        self.offer = baker.make(Notice)
+    
+    def test_notice_created(self):
+        self.assertIsNotNone(self.offer.pk)
+    
+    def test_notice_in_db(self):
+        offers = Notice.objects.all()
+        assert len(offers) != 0
+
+class EventTestModel(TestCase):
+    def setUp(self):
+        self.offer = baker.make(Event)
+    
+    def test_event_created(self):
+        self.assertIsNotNone(self.offer.pk)
+    
+    def test_event_in_db(self):
+        offers = Event.objects.all()
         assert len(offers) != 0
