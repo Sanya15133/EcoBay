@@ -255,6 +255,7 @@ def get_notice(request, id):
 def get_skill(request, id):
 
     skill = get_object_or_404(Skill, id=id)
+    print(skill.created_at)
 
     return render(request, 'skill.html', {
         'skill': skill
